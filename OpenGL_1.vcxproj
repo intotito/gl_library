@@ -141,8 +141,7 @@
   <ItemGroup>
     <ClCompile Include="GLWindow.cpp" />
     <ClCompile Include="include\shader\Shader.hpp" />
-    <ClCompile Include="source\shader\FragmentShader.cpp" />
-    <ClCompile Include="source\shader\VertexShader.cpp" />
+    <ClCompile Include="source\Renderer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="source\buffers\IndexBuffer.cpp" />
     <ClCompile Include="source\buffers\VertexBuffer.cpp" />
@@ -155,8 +154,7 @@
     <ClInclude Include="GLWindow.hpp" />
     <ClInclude Include="include\buffers\IndexBuffer.hpp" />
     <ClInclude Include="include\buffers\VertexBuffer.hpp" />
-    <ClInclude Include="include\shader\FragmentShader.hpp" />
-    <ClInclude Include="include\shader\VertexShader.hpp" />
+    <ClInclude Include="include\Renderer.hpp" />
     <ClInclude Include="include\vendor\stb_image\stb_image.h" />
     <ClInclude Include="include\VertexArray.hpp" />
     <ClInclude Include="include\VertexBufferLayout.hpp" />

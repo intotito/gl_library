@@ -1,15 +1,14 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <sstream>
+//#include <iostream>
+//#include <fstream>
+//#include <string>
+//#include <sstream>
 #include <stdlib.h>
 #include<buffers/VertexBuffer.hpp>
 #include<buffers/IndexBuffer.hpp>
 #include<VertexArray.hpp>
-#include<shader/VertexShader.hpp>
-#include<shader/FragmentShader.hpp>
+#include<shader/Shader.hpp>
 #include <VertexBufferLayout.hpp>
 
 #define ASSERT(x) if (!(x)) __debugbreak();
@@ -84,7 +83,9 @@ int main(void)
 
 
     std::string fileName = "res/Shaders/Basic.shader";
+    Shader shader(fileName);
 
+/*
     VertexShader vertexShader(fileName);
     FragmentShader fragmentShader(fileName);
     GLuint program = glCreateProgram();
@@ -103,7 +104,7 @@ int main(void)
         free(msg);
         glDeleteProgram(program);
     }
-   
+ */  
 
  /*/
 
@@ -133,11 +134,12 @@ int main(void)
 
     IndexBuffer* ib = new IndexBuffer(indices, 6);
 
-    glUseProgram(program);
+ //   glUseProgram(program);
+    shader.Bind();
 
     float rColor[4] = {0.2f, 0.3f, 0.8f, 1.0f};
 
-    GLtry(int uLocation = glGetUniformLocation(program, "rect_Color") );
+    GLtry(int uLocation = glGetUniformLocation(shader.GetID(), "rect_Color"));
  //   ASSERT(uLocation != -1);
     GLtry(glUniform4fv(uLocation, 1, rColor));
 

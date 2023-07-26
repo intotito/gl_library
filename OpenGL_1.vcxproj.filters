@@ -42,16 +42,13 @@
     <ClCompile Include="source\shader\Shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\shader\VertexShader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\shader\FragmentShader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="source\vendor\stb_image\stb_image.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\VertexBufferLayout.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -71,16 +68,13 @@
     <ClInclude Include="include\VertexArray.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\shader\VertexShader.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\shader\FragmentShader.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\vendor\stb_image\stb_image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\VertexBufferLayout.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Renderer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
