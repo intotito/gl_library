@@ -1,5 +1,11 @@
 #pragma once
-#include<Renderer.hpp>
+#include<GL/glew.h>
+#include<stdlib.h>
+#include<string>
+#include<iostream>
+#include<sstream>
+#include<assert.h>
+#include <fstream>
 
 class Shader {
 private:
@@ -10,6 +16,7 @@ public:
 	void CompileShader(GLuint shader, const char* source);
 	void Bind();
 	void Unbind();
+	void SetUniform1i(const char* name, int value);
 	void SetUniform3fv(const char* name, GLfloat* values);
 	void SetUniform4fv(const char* name, GLfloat* values);
 	char* ParseShaderFile(const char* m_token, const std::string& filePath);

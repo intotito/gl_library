@@ -24,9 +24,6 @@
     <ClCompile Include="GLWindow.cpp">
       <Filter>Source Files\window</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="source\buffers\VertexBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -48,13 +45,16 @@
     <ClCompile Include="source\Renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\texture\Texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GLWindow.hpp">
       <Filter>Header Files\window</Filter>
-    </ClInclude>
-    <ClInclude Include="include\buffers\VertexBuffer.hpp">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\buffers\IndexBuffer.hpp">
       <Filter>Header Files</Filter>
@@ -71,10 +71,16 @@
     <ClInclude Include="include\VertexBufferLayout.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\shader\Shader.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\buffers\VertexBuffer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="include\Renderer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\shader\Shader.hpp">
+    <ClInclude Include="include\texture\Texture.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

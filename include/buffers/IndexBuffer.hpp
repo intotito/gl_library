@@ -1,9 +1,10 @@
 #pragma once
-#include <Renderer.hpp>
+#include <GL/glew.h>
 class IndexBuffer
 {
 private:
 	GLuint m_ID;
+	GLuint count;
 public:
 	IndexBuffer();
 	IndexBuffer(const void* data, const GLuint count);
@@ -11,4 +12,5 @@ public:
 	void Bind() const;
 	void Unbind() const;
 	void SetData(const void* data, const GLuint count);
+	inline GLuint GetCount() { return count; }
 };

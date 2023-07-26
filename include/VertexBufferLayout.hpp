@@ -1,6 +1,8 @@
 #pragma once
-#include <Renderer.hpp>
+#include <GL/glew.h>
+#include<string>
 #include <vector>
+#include <assert.h>
 
 
 struct VertexArrayAttribute {

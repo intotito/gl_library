@@ -140,11 +140,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="GLWindow.cpp" />
-    <ClCompile Include="source\Renderer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="source\buffers\IndexBuffer.cpp" />
     <ClCompile Include="source\buffers\VertexBuffer.cpp" />
+    <ClCompile Include="source\Renderer.cpp" />
     <ClCompile Include="source\shader\Shader.cpp" />
+    <ClCompile Include="source\texture\Texture.cpp" />
     <ClCompile Include="source\vendor\stb_image\stb_image.cpp" />
     <ClCompile Include="source\VertexArray.cpp" />
     <ClCompile Include="source\VertexBufferLayout.cpp" />
@@ -155,6 +156,7 @@
     <ClInclude Include="include\buffers\VertexBuffer.hpp" />
     <ClInclude Include="include\Renderer.hpp" />
     <ClInclude Include="include\shader\Shader.hpp" />
+    <ClInclude Include="include\texture\Texture.hpp" />
     <ClInclude Include="include\vendor\stb_image\stb_image.h" />
     <ClInclude Include="include\VertexArray.hpp" />
     <ClInclude Include="include\VertexBufferLayout.hpp" />

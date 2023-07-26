@@ -1,26 +1,9 @@
 #include <Renderer.hpp>
-#include<buffers/VertexBuffer.hpp>
 #include<buffers/IndexBuffer.hpp>
 #include<VertexArray.hpp>
-#include <VertexBufferLayout.hpp>
 #include<shader/Shader.hpp>
+#include<texture/Texture.hpp>
 
-#define ASSERT(x) if (!(x)) __debugbreak();
-#define GLtry(x) ClearError(); x; ASSERT(CheckError(__FILE__, #x, __LINE__));
-
-
-
-void ClearError() {
-    while (glGetError() != GL_NO_ERROR);
-}
-
-bool CheckError(const char* file, const char* function, int line) {
-    while (GLenum error = glGetError()) {
-        std::cout << "[OpenGL Error]: (" << error << ") at Line: " << line << " function: " << function << " File: " << file << std::endl;
-        return false;
-    }
-    return true;
-}
 
 int main(void)
 {
@@ -42,7 +25,8 @@ int main(void)
     /* Make the window's context current */
     glfwMakeContextCurrent(window);
 
-
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_BLEND);
     GLuint result = glewInit();
     if (result != GLEW_OK) {
         std::cout << "Error! Occured: Glew Cannot be Initialized..." << std::endl;
@@ -51,14 +35,11 @@ int main(void)
 
     std::cout << glGetString(GL_VERSION) << std::endl;
 
-    GLfloat positions[24] = {
-        -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
-        -0.5f,  0.5f, 0.0f, 0.0f, 1.0f, 0.0f,
-        0.5f,  0.5f, 0.0f, 0.0f, 0.0f, 1.0f,
-
- //       -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
- //        0.5f,  0.5f, 0.0f, 0.0f, 0.0f, 1.0f,
-        0.5f,  -0.5f, 0.0f, 1.0f, 1.0f, 0.0f,
+    GLfloat positions[32] = {
+        -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+        -0.5f,  0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+        0.5f,  0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,
+        0.5f,  -0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f
        
     };
 
@@ -77,7 +58,7 @@ int main(void)
 
 
     std::string fileName = "res/Shaders/Basic.shader";
-    Shader shader(fileName);
+    Shader* shader = new Shader(fileName);
 
 /*
     VertexShader vertexShader(fileName);
@@ -114,7 +95,10 @@ int main(void)
     VertexArrayAttribute* vaa1 = new VertexArrayAttribute{
        1, 3, GL_FLOAT, GL_FALSE, "Color"
     };
-    VertexBuffer* vb = new VertexBuffer(positions, sizeof(GLfloat) * 24);
+    VertexArrayAttribute* vaa2 = new VertexArrayAttribute{
+        2, 2, GL_FLOAT, GL_FALSE, "Texture_Coord"
+    };
+    VertexBuffer* vb = new VertexBuffer(positions, sizeof(GLfloat) * 32);
 
  //   va->LinkAttribute(vaa, vb);
  //   va->LinkAttribute(vaa1, vb);
@@ -122,6 +106,7 @@ int main(void)
     VertexBufferLayout* vbl = new VertexBufferLayout();
     vbl->Add(*vaa);
     vbl->Add(*vaa1);
+    vbl->Add(*vaa2);
 
     va->AddLayout(*vbl, vb);
 
@@ -129,18 +114,22 @@ int main(void)
     IndexBuffer* ib = new IndexBuffer(indices, 6);
 
  //   glUseProgram(program);
-    shader.Bind();
+    shader->Bind();
 
     GLfloat rColor[4] = {0.2f, 0.3f, 0.8f, 1.0f};
     GLfloat position[] = {0.15f, -0.25f, 0.0f};
-    shader.SetUniform3fv("shift_Pos", position);
-    shader.SetUniform4fv("rect_Color", rColor);
+    shader->SetUniform3fv("shift_Pos", position);
+    shader->SetUniform4fv("rect_Color", rColor);
  //   GLtry(int uLocation = glGetUniformLocation(shader.GetID(), "rect_Color"));
  //   ASSERT(uLocation != -1);
  //   GLtry(glUniform4fv(uLocation, 1, rColor));
+ //   ".\res\textures\Camouflage.jpg"
+    Texture* texture = new Texture("res/textures/Camouflage.jpg");
+    texture->Bind(0);
+    shader->SetUniform1i("u_Texture", 0);
 
 
-
+    Renderer* renderer = new Renderer();
 
 
 /*
@@ -153,11 +142,11 @@ int main(void)
     {
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
-
+        renderer->Draw(va, ib, shader);
  //       glDrawArrays(GL_TRIANGLES, 0, 6);
-        GLtry(
-            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr)
-        );
+ //       GLtry(
+ //           glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr)
+ //       );
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
 
@@ -168,7 +157,9 @@ int main(void)
     delete ib;
     delete vaa;
     delete vaa1;
+    delete shader;
     delete va;
+    delete renderer;
 //    free(ss->fragmentShader);
 //    free(ss->vertexShader);
  //   free(ss);

@@ -1,6 +1,6 @@
 #pragma once
+//#include <Renderer.hpp>
 #include<buffers/VertexBuffer.hpp>
-#include <Renderer.hpp>
 #include<VertexBufferLayout.hpp>
 
 class VertexArray
