@@ -1,15 +1,9 @@
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-//#include <iostream>
-//#include <fstream>
-//#include <string>
-//#include <sstream>
-#include <stdlib.h>
+#include <Renderer.hpp>
 #include<buffers/VertexBuffer.hpp>
 #include<buffers/IndexBuffer.hpp>
 #include<VertexArray.hpp>
-#include<shader/Shader.hpp>
 #include <VertexBufferLayout.hpp>
+#include<shader/Shader.hpp>
 
 #define ASSERT(x) if (!(x)) __debugbreak();
 #define GLtry(x) ClearError(); x; ASSERT(CheckError(__FILE__, #x, __LINE__));
@@ -137,11 +131,13 @@ int main(void)
  //   glUseProgram(program);
     shader.Bind();
 
-    float rColor[4] = {0.2f, 0.3f, 0.8f, 1.0f};
-
-    GLtry(int uLocation = glGetUniformLocation(shader.GetID(), "rect_Color"));
+    GLfloat rColor[4] = {0.2f, 0.3f, 0.8f, 1.0f};
+    GLfloat position[] = {0.15f, -0.25f, 0.0f};
+    shader.SetUniform3fv("shift_Pos", position);
+    shader.SetUniform4fv("rect_Color", rColor);
+ //   GLtry(int uLocation = glGetUniformLocation(shader.GetID(), "rect_Color"));
  //   ASSERT(uLocation != -1);
-    GLtry(glUniform4fv(uLocation, 1, rColor));
+ //   GLtry(glUniform4fv(uLocation, 1, rColor));
 
 
 

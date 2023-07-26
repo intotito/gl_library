@@ -4,16 +4,11 @@
 Shader::Shader(std::string& filePath)
 {
     GLuint vShader = glCreateShader(GL_VERTEX_SHADER);
- //   if (vShader == GL_FALSE) {
- //       assert(false);
- //   }
     char* source = ParseShaderFile("#SHADER VERTEX", filePath);
     CompileShader(vShader, source);
     free(source);
     GLuint fShader = glCreateShader(GL_FRAGMENT_SHADER);
-    //    if (fShader == GL_FALSE) {
-    //        assert(false);
-    //    }
+
     source = ParseShaderFile("#SHADER FRAGMENT", filePath);
     CompileShader(fShader, source);
     free(source);
@@ -47,6 +42,21 @@ void Shader::Bind()
 
 void Shader::Unbind() {
     glUseProgram(0);
+}
+void Shader::SetUniform3fv(const char* name, GLfloat* values) {
+    GLuint location = glGetUniformLocation(m_ID, name);
+    if (location == -1) {
+        std::cout << "Warning! Uniform Location with name " << name << " Not found!!" << std::endl;
+    }
+    glUniform3fv(location, 1, values);
+}
+void Shader::SetUniform4fv(const char* name, GLfloat* values)
+{
+    GLuint location = glGetUniformLocation(m_ID, name);
+    if (location == -1) {
+        std::cout << "Warning! Uniform Location with name " << name << " Not found!!" << std::endl;
+    }
+    glUniform4fv(location, 1, values);
 }
 
 void Shader::CompileShader(GLuint shader, const char* source)

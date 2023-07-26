@@ -1,8 +1,6 @@
 #pragma once
 #include<buffers/VertexBuffer.hpp>
-#include<string>
-#include <GL/glew.h>
-#include<assert.h>
+#include <Renderer.hpp>
 #include<VertexBufferLayout.hpp>
 
 class VertexArray

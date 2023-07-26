@@ -1,8 +1,7 @@
 #pragma once
-#include <GL/glew.h>
+#include <Renderer.hpp>
 #include <vector>
-#include<string>
-#include<assert.h> 
+
 
 struct VertexArrayAttribute {
 	GLuint index;

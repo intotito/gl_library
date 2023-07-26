@@ -1,5 +1,4 @@
 #include <VertexArray.hpp>
-#include <vector>
 
 VertexArray::VertexArray()
 {
