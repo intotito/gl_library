@@ -67,6 +67,15 @@ void Shader::SetUniform4fv(const char* name, GLfloat* values)
     glUniform4fv(location, 1, values);
 }
 
+void Shader::SetUniformMat4f(const char* name, glm::mat4& matrix)
+{
+    GLuint location = glGetUniformLocation(m_ID, name);
+    if (location == -1) {
+        std::cout << "Warning! Uniform Location with name " << name << " Not found!!" << std::endl;
+    }
+    glUniformMatrix4fv(location, 1, GL_FALSE, &matrix[0][0]);
+}
+
 void Shader::CompileShader(GLuint shader, const char* source)
 {
     GLint compile;

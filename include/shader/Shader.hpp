@@ -6,6 +6,7 @@
 #include<sstream>
 #include<assert.h>
 #include <fstream>
+#include<vendor/glm/glm.hpp>
 
 class Shader {
 private:
@@ -19,6 +20,7 @@ public:
 	void SetUniform1i(const char* name, int value);
 	void SetUniform3fv(const char* name, GLfloat* values);
 	void SetUniform4fv(const char* name, GLfloat* values);
+	void SetUniformMat4f(const char* name, glm::mat4& matrix);
 	char* ParseShaderFile(const char* m_token, const std::string& filePath);
 	inline GLuint GetID() { return m_ID; }
 

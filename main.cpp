@@ -3,7 +3,8 @@
 #include<VertexArray.hpp>
 #include<shader/Shader.hpp>
 #include<texture/Texture.hpp>
-
+#include<vendor/glm/glm.hpp>
+#include<vendor/glm/gtc/matrix_transform.hpp>
 
 int main(void)
 {
@@ -54,6 +55,7 @@ int main(void)
         0.5f,  -0.5f,
     };
 
+    glm::mat4 proj_mat = glm::ortho(-2.0f, 2.0f, -1.5f, 1.5f, -1.0f, 1.0f);
 
 
 
@@ -120,11 +122,12 @@ int main(void)
     GLfloat position[] = {0.15f, -0.25f, 0.0f};
     shader->SetUniform3fv("shift_Pos", position);
     shader->SetUniform4fv("rect_Color", rColor);
+    shader->SetUniformMat4f("u_MVP", proj_mat);
  //   GLtry(int uLocation = glGetUniformLocation(shader.GetID(), "rect_Color"));
  //   ASSERT(uLocation != -1);
  //   GLtry(glUniform4fv(uLocation, 1, rColor));
  //   ".\res\textures\Camouflage.jpg"
-    Texture* texture = new Texture("res/textures/Camouflage.jpg");
+    Texture* texture = new Texture("res/textures/Camo.png");
     texture->Bind(0);
     shader->SetUniform1i("u_Texture", 0);
 
