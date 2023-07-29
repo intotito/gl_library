@@ -140,6 +140,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="GLWindow.cpp" />
+    <ClCompile Include="include\vendor\imgui\imgui.cpp" />
+    <ClCompile Include="include\vendor\imgui\imgui_demo.cpp" />
+    <ClCompile Include="include\vendor\imgui\imgui_draw.cpp" />
+    <ClCompile Include="include\vendor\imgui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="include\vendor\imgui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="include\vendor\imgui\imgui_tables.cpp" />
+    <ClCompile Include="include\vendor\imgui\imgui_widgets.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="source\buffers\IndexBuffer.cpp" />
     <ClCompile Include="source\buffers\VertexBuffer.cpp" />
@@ -439,6 +446,15 @@
     <ClInclude Include="include\vendor\glm\vec3.hpp" />
     <ClInclude Include="include\vendor\glm\vec4.hpp" />
     <ClInclude Include="include\vendor\glm\vector_relational.hpp" />
+    <ClInclude Include="include\vendor\imgui\imconfig.h" />
+    <ClInclude Include="include\vendor\imgui\imgui.h" />
+    <ClInclude Include="include\vendor\imgui\imgui_impl_glfw.h" />
+    <ClInclude Include="include\vendor\imgui\imgui_impl_opengl3.h" />
+    <ClInclude Include="include\vendor\imgui\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="include\vendor\imgui\imgui_internal.h" />
+    <ClInclude Include="include\vendor\imgui\imstb_rectpack.h" />
+    <ClInclude Include="include\vendor\imgui\imstb_textedit.h" />
+    <ClInclude Include="include\vendor\imgui\imstb_truetype.h" />
     <ClInclude Include="include\vendor\stb_image\stb_image.h" />
     <ClInclude Include="include\VertexArray.hpp" />
     <ClInclude Include="include\VertexBufferLayout.hpp" />
