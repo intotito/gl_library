@@ -11,7 +11,7 @@ public:
 	void Bind();
 	void Unbind();
 //	void LinkAttribute(VertexArrayAttribute* vaa, VertexBuffer* vb);
-	void AddLayout(VertexBufferLayout vbl, VertexBuffer* vb);
+	void AddLayout(VertexBufferLayout* vbl, VertexBuffer* vb);
 
 private:
 	//	std::vector<VertexArrayAttribute*> attributes;

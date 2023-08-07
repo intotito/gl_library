@@ -8,6 +8,10 @@
 #include<vendor/imgui/imgui.h>
 #include <vendor/imgui/imgui_impl_glfw.h>
 #include<vendor/imgui/imgui_impl_opengl3.h>
+#include <test/Test.hpp>
+#include<test/ClearColor.hpp>
+#include<test/TestMenu.hpp>
+#include<test/Texture2D.hpp>
 
 // #include <vendor/imgui/backends/imgui_impl_opengl3.h>
 
@@ -60,7 +64,7 @@ int main(void)
  //   ImGui_ImplG_InitForOpenGL(window, gl_context);
     ImGui_ImplOpenGL3_Init(glsl_version);
 
-
+/*
     GLfloat positions[32] = {
         -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
         -0.5f,  0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
@@ -81,8 +85,8 @@ int main(void)
     };
 
     glm::mat4 proj_mat = glm::ortho(-2.0f, 2.0f, -1.5f, 1.5f, -1.0f, 1.0f);
-    
-
+ */   
+/*
     std::string fileName = "res/Shaders/Basic.shader";
     Shader* shader = new Shader(fileName);
 
@@ -101,11 +105,11 @@ int main(void)
 
 
     VertexBufferLayout* vbl = new VertexBufferLayout();
-    vbl->Add(*vaa);
-    vbl->Add(*vaa1);
-    vbl->Add(*vaa2);
+    vbl->Add(vaa);
+    vbl->Add(vaa1);
+    vbl->Add(vaa2);
 
-    va->AddLayout(*vbl, vb);
+    va->AddLayout(vbl, vb);
 
 
     IndexBuffer* ib = new IndexBuffer(indices, 6);
@@ -115,25 +119,33 @@ int main(void)
     GLfloat rColor[4] = {0.2f, 0.3f, 0.8f, 1.0f};
     GLfloat position[] = {0.0f, 0.0f, 0.0f};
     shader->SetUniform3fv("shift_Pos", position);
-    shader->SetUniform4fv("rect_Color", rColor);
- 
+//    shader->SetUniform4fv("rect_Color", rColor);
+
     Texture* texture = new Texture("res/textures/Camo.png");
     texture->Bind(0);
-    shader->SetUniform1i("u_Texture", 0);
-
+   shader->SetUniform1i("u_Texture", 0);
+ */
 
     Renderer* renderer = new Renderer();
 
 
-/*
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 2, vp);
-*/    
-    ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+//    ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+
+
+    Test::TestMenu* testMenu = new Test::TestMenu();
+    testMenu->AddTest<Test::ClearColor>("Clear Color");
+    testMenu->AddTest<Test::Texture2D>("Texture");
+    
+
+
 
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
     {
+       
+
+   //     test->OnUpdate(0.0f);
+  //      test->OnRender();
         /* Poll for and process events */
         glfwPollEvents();
 
@@ -141,45 +153,19 @@ int main(void)
         ImGui_ImplOpenGL3_NewFrame();
         ImGui::NewFrame();
 
-         // 2. Show a simple window that we create ourselves. We use a Begin/End pair to create a named window.
-        {
-            static float f = 0.0f;
-            static int counter = 0;
-            static float cod[] = {0.0f, 0.0f, 0.0f};
-            ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
-           
-            ImGui::InputFloat3("XYZ", cod);
-            ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
-
-            ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-
-            if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
-                counter++;
-            ImGui::SameLine();
-            ImGui::Text("counter = %d", counter);
-
-            ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
-            ImGui::End();
+        testMenu->OnRender(*renderer);
+  //      test->OnImGuiRender();
 
 
-            /* Render here */
-            glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
-            glClear(GL_COLOR_BUFFER_BIT);
-
-            glm::mat4 view_mat = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, f, 0.0f));
+ /*           glm::mat4 view_mat = glm::mat4(1.0f);// , glm::vec3(cod[0], cod[1], cod[2]));
             glm::mat4 mvp_mat = proj_mat * view_mat;
             shader->SetUniformMat4f("u_MVP", mvp_mat);
             renderer->Draw(va, ib, shader);
+*/
+        
 
 
-            view_mat = glm::translate(view_mat, glm::vec3(0.14f, -0.2f, 0.0f));
-            mvp_mat = proj_mat * view_mat;
-            shader->SetUniformMat4f("u_MVP", mvp_mat);
-            renderer->Draw(va, ib, shader);
-        }
-
-
-        // Rendering
+            
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
      //   ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
@@ -189,12 +175,12 @@ int main(void)
 
         
     }
-    delete vb;
-    delete ib;
-    delete vaa;
-    delete vaa1;
-    delete shader;
-    delete va;
+ //   delete vb;
+ //   delete ib;
+ //   delete vaa;
+//    delete vaa1;
+ //   delete shader;
+//    delete va;
     delete renderer;
     // Cleanup
     ImGui_ImplOpenGL3_Shutdown();

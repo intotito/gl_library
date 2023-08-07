@@ -26,10 +26,10 @@ class VertexBufferLayout {
 public:
 	VertexBufferLayout();
 	~VertexBufferLayout();
-	void Add(VertexArrayAttribute vaa);
-	const std::vector<VertexArrayAttribute> GetAttributes() const;
+	void Add(VertexArrayAttribute* vaa);
+	const std::vector<VertexArrayAttribute*> GetAttributes() const;
 	inline int GetStride() { return stride; }
 private:
-	std::vector<VertexArrayAttribute> attributes;
+	std::vector<VertexArrayAttribute*> attributes;
 	int stride;
 };

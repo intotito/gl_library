@@ -33,6 +33,7 @@ Shader::Shader(std::string& filePath)
 
 Shader::~Shader()
 {
+    Unbind();
 }
 
 void Shader::Bind() 

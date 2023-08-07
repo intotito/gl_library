@@ -25,9 +25,9 @@ void IndexBuffer::Unbind() const
 
 void IndexBuffer::SetData(const void* data, const GLuint count)
 {
-	Bind();
 	IndexBuffer::count = count;
-	glBufferData(m_ID, sizeof(GLuint) * count, data, GL_STATIC_DRAW);
+	Bind();
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint) * count, data, GL_STATIC_DRAW);
 }
 
 IndexBuffer::~IndexBuffer()

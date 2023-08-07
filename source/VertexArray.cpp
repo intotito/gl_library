@@ -33,13 +33,14 @@ void VertexArray::Unbind() {
 	}
 }
 */
-void VertexArray::AddLayout(VertexBufferLayout vbl, VertexBuffer* vb) {
-	const auto& elements = vbl.GetAttributes();
+void VertexArray::AddLayout(VertexBufferLayout* vbl, VertexBuffer* vb) {
+	const auto& elements = vbl->GetAttributes();
 	int pointer = 0;
 	for (int i = 0; i < elements.size(); i++) {
 		const auto& element = elements[i];
-		glEnableVertexAttribArray(element.index);
-		glVertexAttribPointer(element.index, element.count, element.type, element.normalized, vbl.GetStride(), (void*)pointer);
-		pointer += (element.count * element.GetSize());
+		glEnableVertexAttribArray(element->index);
+		glVertexAttribPointer(element->index, element->count, element->type, element->normalized, vbl->GetStride(), (void*)pointer);
+		pointer += (element->count * element->GetSize());
 	}
+	delete vbl;
 }

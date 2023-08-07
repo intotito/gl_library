@@ -18,7 +18,7 @@ Texture::Texture(const char* path):filePath(path), localBuffer(nullptr), width(0
 }
 Texture::~Texture()
 {
-
+	Unbind();
 }
 
 void Texture::Bind(GLuint slot) const
