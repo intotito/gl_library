@@ -46,14 +46,14 @@ void Shader::Unbind() {
 }
 void Shader::SetUniform1i(const char* name, int value)
 {
-    GLuint location = glGetUniformLocation(m_ID, name);
+    GLuint location = GetUniformLocation(name);// glGetUniformLocation(m_ID, name);
     if (location == -1) {
         std::cout << "Warning! Uniform Location with name " << name << " Not found!!" << std::endl;
     }
     glUniform1i(location, value);
 }
 void Shader::SetUniform3fv(const char* name, GLfloat* values) {
-    GLuint location = glGetUniformLocation(m_ID, name);
+    GLuint location = GetUniformLocation(name);// glGetUniformLocation(m_ID, name);
     if (location == -1) {
         std::cout << "Warning! Uniform Location with name " << name << " Not found!!" << std::endl;
     }
@@ -61,7 +61,7 @@ void Shader::SetUniform3fv(const char* name, GLfloat* values) {
 }
 void Shader::SetUniform4fv(const char* name, GLfloat* values)
 {
-    GLuint location = glGetUniformLocation(m_ID, name);
+    GLuint location = GetUniformLocation(name);// glGetUniformLocation(m_ID, name);
     if (location == -1) {
         std::cout << "Warning! Uniform Location with name " << name << " Not found!!" << std::endl;
     }
@@ -70,7 +70,7 @@ void Shader::SetUniform4fv(const char* name, GLfloat* values)
 
 void Shader::SetUniformMat4f(const char* name, glm::mat4& matrix)
 {
-    GLuint location = glGetUniformLocation(m_ID, name);
+    GLuint location = GetUniformLocation(name);// glGetUniformLocation(m_ID, name);
     if (location == -1) {
         std::cout << "Warning! Uniform Location with name " << name << " Not found!!" << std::endl;
     }
@@ -119,6 +119,17 @@ char* Shader::ParseShaderFile(const char* m_token, const std::string& filePath)
     }
     int length = strlen(ss.str().c_str());
     char* source = (char*)malloc(sizeof(char) * length + 1);
-    strcpy(source, ss.str().c_str());
+    strcpy(source, ss.str().c_str()); // I know what I'm doing
     return source;
+}
+
+GLint Shader::GetUniformLocation(const char* name)
+{
+    if (cachedUniformLocations.find(name) != cachedUniformLocations.end())
+    {
+        return cachedUniformLocations[name];
+    }
+    GLuint location = glGetUniformLocation(m_ID, name);
+    cachedUniformLocations[name] = location;
+    return location;
 }

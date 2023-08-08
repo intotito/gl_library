@@ -11,10 +11,10 @@ namespace Test {
 		proj_matrix(glm::ortho(-2.0f, 2.0f, -1.5f, 1.5f, -1.0f, 1.0f)), view_matrix(glm::mat4(1.0f)) {
 		GLfloat vertPos[] = {
 			-0.25f, 0.5f,  0.25f, 1.0f, //A
-			-0.5f,	0.0f,	0.0f, 0.5f,//B
-			0.0f,	0.0f,	0.5f, 0.5f,//C
-			-0.5f,	-0.5f,	0.0f, 0.0f,//D
-			0.0f,	-0.5f,	0.5f, 0.0f,//E
+			-0.5f,	0.0f,	0.0f, 0.5f,	//B
+			0.0f,	0.0f,	0.5f, 0.5f,	//C
+			-0.5f,	-0.5f,	0.0f, 0.0f,	//D
+			0.0f,	-0.5f,	0.5f, 0.0f,	//E
 			0.5f,	0.0f,	1.0f, 0.5f, //F
 			0.5f,	-0.5f,	1.0f, 0.0f	//G
 		};
@@ -44,9 +44,10 @@ namespace Test {
 		vbl->Add(vaa2);
 		va->AddLayout(vbl, vb);
 		
-		ib = new IndexBuffer(indices, 15);
-//		ib->Bind();
-//		ib->SetData(indices, 15);
+//		ib = new IndexBuffer(indices, 15);
+		ib = new IndexBuffer();
+		ib->Bind();
+		ib->SetData(indices, 15);
 		
 		std::string fileName = "res/Shaders/Basic.shader";
 		shader = new Shader(fileName);

@@ -7,10 +7,14 @@
 #include<assert.h>
 #include <fstream>
 #include<vendor/glm/glm.hpp>
+#include<unordered_map>
 
 class Shader {
 private:
 	GLuint m_ID;
+	std::unordered_map<std::string, GLint> cachedUniformLocations;
+	GLint GetUniformLocation(const char*);
+
 public:
 	Shader(std::string& filePath);
 	~Shader();
@@ -23,6 +27,5 @@ public:
 	void SetUniformMat4f(const char* name, glm::mat4& matrix);
 	char* ParseShaderFile(const char* m_token, const std::string& filePath);
 	inline GLuint GetID() { return m_ID; }
-
 };
 
