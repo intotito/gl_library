@@ -52,8 +52,10 @@ namespace Test {
 		std::string fileName = "res/Shaders/Basic.shader";
 		shader = new Shader(fileName);
 		shader->Bind();
-		texture = new Texture("res/textures/Camo.png");
-		texture->Bind(0);
+		GLuint texture1 = Texture::LoadTexture("res/textures/Camo.png");
+		Texture::Bind(texture1, 0);
+//		texture = new Texture("res/textures/Camo.png");
+//		texture->Bind(0);
 		shader->SetUniform1i("u_Texture", 0);
 	}
 
@@ -61,7 +63,7 @@ namespace Test {
 		delete va;
 		delete vb;
 		delete ib;
-		delete texture;
+//		delete texture;
 		delete shader;
 	}
 	void Texture2D::OnUpdate(float deltaTime)
