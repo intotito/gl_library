@@ -44,6 +44,15 @@ void Shader::Bind()
 void Shader::Unbind() {
     glUseProgram(0);
 }
+
+void Shader::SetUniform1iv(const char* name, GLint* values, GLint count)
+{
+    GLuint location = GetUniformLocation(name);
+    if (location == -1) {
+        std::cout << "Warning! Uniform Location with name " << name << " Not found!!" << std::endl;
+    }
+    glUniform1iv(location, count, values);
+}
 void Shader::SetUniform1i(const char* name, int value)
 {
     GLuint location = GetUniformLocation(name);// glGetUniformLocation(m_ID, name);
