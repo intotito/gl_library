@@ -12,6 +12,7 @@
 #include<test/ClearColor.hpp>
 #include<test/TestMenu.hpp>
 #include<test/Texture2D.hpp>
+#include<test/Cube.hpp>
 
 // #include <vendor/imgui/backends/imgui_impl_opengl3.h>
 
@@ -38,6 +39,7 @@ int main(void)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_BLEND);
 
+ //   glDisable(GL_LIGHTING);
 
     GLuint result = glewInit();
     if (result != GLEW_OK) {
@@ -135,6 +137,7 @@ int main(void)
     Test::TestMenu* testMenu = new Test::TestMenu();
     testMenu->AddTest<Test::ClearColor>("Clear Color");
     testMenu->AddTest<Test::Texture2D>("Texture");
+    testMenu->AddTest<Test::Cube>("Cube");
     
 
 

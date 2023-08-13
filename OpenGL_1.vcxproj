@@ -152,6 +152,11 @@
     <ClCompile Include="source\buffers\VertexBuffer.cpp" />
     <ClCompile Include="source\Renderer.cpp" />
     <ClCompile Include="source\shader\Shader.cpp" />
+    <ClCompile Include="source\test\Cube.cpp" />
+    <ClCompile Include="source\test\Texture2D.cpp" />
+    <ClCompile Include="source\test\ClearColor.cpp" />
+    <ClCompile Include="source\test\Test.cpp" />
+    <ClCompile Include="source\test\TestMenu.cpp" />
     <ClCompile Include="source\texture\Texture.cpp" />
     <ClCompile Include="source\vendor\stb_image\stb_image.cpp" />
     <ClCompile Include="source\VertexArray.cpp" />
@@ -163,6 +168,11 @@
     <ClInclude Include="include\buffers\VertexBuffer.hpp" />
     <ClInclude Include="include\Renderer.hpp" />
     <ClInclude Include="include\shader\Shader.hpp" />
+    <ClInclude Include="include\test\Cube.hpp" />
+    <ClInclude Include="include\test\Texture2D.hpp" />
+    <ClInclude Include="include\test\ClearColor.hpp" />
+    <ClInclude Include="include\test\Test.hpp" />
+    <ClInclude Include="include\test\TestMenu.hpp" />
     <ClInclude Include="include\texture\Texture.hpp" />
     <ClInclude Include="include\vendor\glm\common.hpp" />
     <ClInclude Include="include\vendor\glm\detail\compute_common.hpp" />
