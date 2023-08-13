@@ -6,7 +6,7 @@
 
 namespace Test {
 
-	Texture2D::Texture2D(std::string testName) : Test(testName), 
+	Texture2D::Texture2D(std::string testName) : Test(testName), texture(nullptr),
 		ib(nullptr), vb(nullptr), va(nullptr), translate{ 0.0f, 0.0f, 0.0f },
 		proj_matrix(glm::ortho(-2.0f, 2.0f, -1.5f, 1.5f, -1.0f, 1.0f)), view_matrix(glm::mat4(1.0f)) {
 		GLfloat vertPos[70] = {

@@ -25,7 +25,7 @@ int main(void)
         return -1;
 
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
+    window = glfwCreateWindow(640 * 2, 480 * 2, "Hello World", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -39,6 +39,8 @@ int main(void)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_BLEND);
 
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LESS);
  //   glDisable(GL_LIGHTING);
 
     GLuint result = glewInit();
