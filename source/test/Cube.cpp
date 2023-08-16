@@ -7,45 +7,45 @@
 namespace Test {
 
 	Cube::Cube(std::string testName) : Test(testName),
-		ib(nullptr), vb(nullptr), va(nullptr), translate{ 0.0f, 0.0f, 0.0f },
-		proj_matrix(glm::perspective(glm::radians(45.0f), (640.0f / 480.0f), 0.1f, 10.0f)), view_matrix(glm::mat4(1.0f)) {
-		GLfloat vertPos[72] = {
-			// FACE 1
-			-0.5f,  0.5f,  0.5f,	//A - 0
-			-0.5f,  0.5f, -0.5f,	//B - 1
-			-0.5f, -0.5f, -0.5f,	//C - 2
-			-0.5f, -0.5f,  0.5f,	//D - 3
+		ib(nullptr), vb(nullptr), va(nullptr), translate{ 0.0f, 0.0f, 0.0f }, lightPosition{-10.0f, 18.0f, 4.0f },
+		proj_matrix(glm::perspective(glm::radians(45.0f), (640.0f / 480.0f), 1.f, 100.0f)), view_matrix(glm::mat4(1.0f)) {
+		GLfloat vertPos[144] = {
+			// FACE 1 - Position	-	Normal
+			-0.5f,  0.5f,  0.5f,	-1.0f, 0.0f, 0.0f,	//A - 0
+			-0.5f,  0.5f, -0.5f,	-1.0f, 0.0f, 0.0f,	//B - 1
+			-0.5f, -0.5f, -0.5f,	-1.0f, 0.0f, 0.0f,	//C - 2
+			- 0.5f, -0.5f,  0.5f,	-1.0f, 0.0f, 0.0f,	//D - 3
 
-			// FACE 2
-			-0.5f,  0.5f, -0.5f,	//B - 4
-			 0.5f,  0.5f, -0.5f,	//E - 5
-			 0.5f, -0.5f, -0.5f,	//F - 6
-			-0.5f, -0.5f, -0.5f,	//C - 7
+			// FACE 2 - Position	-	Normal
+			-0.5f,  0.5f, -0.5f,	0.0f, 0.0f, -1.0f,	//B - 4
+			 0.5f,  0.5f, -0.5f,	0.0f, 0.0f, -1.0f,	//E - 5
+			 0.5f, -0.5f, -0.5f,	0.0f, 0.0f, -1.0f,	//F - 6
+			-0.5f, -0.5f, -0.5f,	0.0f, 0.0f, -1.0f,	//C - 7
 
-			// FACE 3
-			 0.5f,  0.5f, -0.5f,	//E - 8
-			 0.5f,  0.5f,  0.5f,	//G - 9
-			 0.5f, -0.5f,  0.5f,	//H - 10
-			 0.5f, -0.5f, -0.5f,	//F - 11
+			// FACE 3 - Position	-	Normal
+			 0.5f,  0.5f, -0.5f,	1.0f, 0.0f, 0.0f,	//E - 8
+			 0.5f,  0.5f,  0.5f,	1.0f, 0.0f, 0.0f,	//G - 9
+			 0.5f, -0.5f,  0.5f,	1.0f, 0.0f, 0.0f,	//H - 10
+			 0.5f, -0.5f, -0.5f,	1.0f, 0.0f, 0.0f,	//F - 11
 
-			 // FACE 4
+			 // FACE 4 - Position	-	Normal
 
-			-0.5f,  0.5f,  0.5f,	//A - 12
-			-0.5f, -0.5f,  0.5f,	//D - 13
-			 0.5f, -0.5f,  0.5f,	//H - 14
-			 0.5f,  0.5f,  0.5f,	//G - 15
+			-0.5f,  0.5f,  0.5f,	0.0f, 0.0f, 1.0f,	//A - 12
+			-0.5f, -0.5f,  0.5f,	0.0f, 0.0f, 1.0f,	//D - 13
+			 0.5f, -0.5f,  0.5f,	0.0f, 0.0f, 1.0f,	//H - 14
+			 0.5f,  0.5f,  0.5f,	0.0f, 0.0f, 1.0f,	//G - 15
 
-			 // FACE 5
-			-0.5f,  0.5f,  0.5f,	//A - 16
-			 0.5f,  0.5f,  0.5f,	//G - 17
-			 0.5f,  0.5f, -0.5f,	//E - 18
-			-0.5f,  0.5f, -0.5f,	//B - 19
+			 // FACE 5 - Position	-	Normal
+			-0.5f,  0.5f,  0.5f,	0.0f, 1.0f, 0.0f,	//A - 16
+			 0.5f,  0.5f,  0.5f,	0.0f, 1.0f, 0.0f,	//G - 17
+			 0.5f,  0.5f, -0.5f,	0.0f, 1.0f, 0.0f,	//E - 18
+			-0.5f,  0.5f, -0.5f,	0.0f, 1.0f, 0.0f,	//B - 19
 			
-			// FACE 6
-			-0.5f, -0.5f, -0.5f,	//C - 20
-			 0.5f, -0.5f, -0.5f,	//F - 21
-			 0.5f, -0.5f,  0.5f,	//H - 22
-			 -0.5f, -0.5f,  0.5f,	//D - 23
+			// FACE 6 - Position	-	Normal
+			-0.5f, -0.5f, -0.5f,	0.0f, -1.0f, 0.0f,	//C - 20
+			 0.5f, -0.5f, -0.5f,	0.0f, -1.0f, 0.0f,	//F - 21
+			 0.5f, -0.5f,  0.5f,	0.0f, -1.0f, 0.0f,	//H - 22
+			 - 0.5f, -0.5f,  0.5f,	0.0f, -1.0f, 0.0f	//D - 23
 		};
 		GLuint indices[36] = {
 			0, 1, 2,		2, 3, 0,	// FACE 1 (ABCD)
@@ -56,9 +56,13 @@ namespace Test {
 			20, 21, 22,		22, 23, 20		// FACE 6 (CFHD)
 		};
 
+		
+			
+		
+
 		va = new VertexArray();
 		va->Bind();
-		vb = new VertexBuffer(vertPos, 72 * sizeof(GLfloat));
+		vb = new VertexBuffer(vertPos, 144 * sizeof(GLfloat));
 		//		vb->Bind();
 		//		vb->SetData(vertPos, 28 * sizeof(GLfloat));
 
@@ -66,9 +70,14 @@ namespace Test {
 		VertexArrayAttribute* vaa = new VertexArrayAttribute{
 			0, 3, GL_FLOAT, GL_FALSE, "Position"
 		};
+
+		VertexArrayAttribute* vaa1 = new VertexArrayAttribute{
+			1, 3, GL_FLOAT, GL_FALSE, "Normal"
+		};
 		
 		VertexBufferLayout* vbl = new VertexBufferLayout();
 		vbl->Add(vaa);
+		vbl->Add(vaa1);
 		
 		va->AddLayout(vbl, vb);
 
@@ -95,9 +104,11 @@ namespace Test {
 	}
 	void Cube::OnRender(Renderer& renderer)
 	{
-		view_matrix = glm::translate(glm::mat4(1.0f), glm::vec3(translate[0] / 1.0f, translate[1] / 1.0f, translate[2] * 2));
-		glm::mat4 mvp = proj_matrix * view_matrix;
+		glm::mat4 model_matrix = glm::rotate(glm::mat4(1.0f), (float)glfwGetTime(), glm::vec3(0.1f, 1.0f, 0.5f));
+		view_matrix = glm::translate(glm::mat4(1.0f), glm::vec3(translate[0] / 1.0f, translate[1] / 1.0f, translate[2] * 2 - 5.0f));
+		glm::mat4 mvp = proj_matrix * view_matrix * model_matrix;
 		shader->SetUniformMat4f("u_MVP", mvp);
+		shader->SetUniform3fv("u_LightPos", lightPosition);
 
 		renderer.Draw(va, ib, shader);
 	}

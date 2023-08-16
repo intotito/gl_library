@@ -26,6 +26,6 @@ namespace Test {
 		glm::mat4 proj_matrix;
 		glm::mat4 view_matrix;
 		float translate[3];
-		
+		float lightPosition[3];
 	};
 }
