@@ -9,6 +9,7 @@
 #include<shader/Shader.hpp>
 #include<texture/Texture.hpp>
 #include<vendor/glm/gtc/matrix_transform.hpp>
+#include<Camera.hpp>
 
 namespace Test {
 	class Cube : public Test {
@@ -27,5 +28,6 @@ namespace Test {
 		glm::mat4 view_matrix;
 		float translate[3];
 		float lightPosition[3];
+		Camera* camera;
 	};
 }
