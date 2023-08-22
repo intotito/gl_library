@@ -6,9 +6,9 @@
 
 namespace Test {
 
-	Cube::Cube(std::string testName) : Test(testName), 
-		camera(new Camera(glm::vec3(2.0f, 10.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f))),
-		ib(nullptr), vb(nullptr), va(nullptr), translate{ 0.0f, 0.0f, 0.0f }, lightPosition{5.5f, 10.0f, -5.0f },
+	Cube::Cube(std::string testName) : Test(testName), m_LookAt(glm::vec3(0.0f, 0.0f, 0.0f)),
+		camera(new Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f))),
+		ib(nullptr), vb(nullptr), va(nullptr), translate{ 0.0f, 0.0f, 0.0f }, lightPosition{0.0f, 00.0f, 5.0f },
 		proj_matrix(glm::perspective(glm::radians(45.0f), (640.0f / 480.0f), 1.f, 100.0f)), view_matrix(glm::mat4(1.0f)) {
 		GLfloat vertPos[144] = {
 			// FACE 1 - Position	-	Normal
@@ -108,28 +108,37 @@ namespace Test {
 	{
 		float angle = (float)glfwGetTime() / 10.0f;
 		glm::mat4 rotate(
-			glm::cos(angle),	glm::sin(angle),	0.0f, 0.0f,
-			-sin(angle),		glm::cos(angle),	0.0f, 0.0f,
-			0.0f,				0.0f,				1.0f, 0.0f,
-			0.0f,				0.0f,				0.0f, 1.0f);
+			glm::cos(angle), glm::sin(angle), 0.0f, 0.0f,
+			-sin(angle), glm::cos(angle), 0.0f, 0.0f,
+			0.0f, 0.0f, 1.0f, 0.0f,
+			0.0f, 0.0f, 0.0f, 1.0f);
 
 
-		const float radius = 10.0f;
-		camera->SetX(glm::sin(angle) * radius);
-		camera->SetZ(glm::cos(angle) * radius);
+		//		const float radius = 5.0f;
+		camera->SetX(glm::sin(glm::radians(m_angle)) * 10.0f);
+		camera->SetZ(glm::cos(glm::radians(m_angle)) * 10.0f);
+		camera->SetLookAt(m_LookAt);
 
-		glm::mat4 model_matrix = glm::translate(glm::mat4(1.0f), glm::vec3(translate[0], translate[1], translate[2]));// *glm::rotate(glm::mat4(1.0f), (float)glfwGetTime(), glm::vec3(0.0f, 1.0f, 0.0f));
+		glm::mat4 model_matrix = glm::translate(glm::mat4(1.0f),
+			glm::vec3(translate[0], translate[1], translate[2])) * glm::rotate(glm::mat4(1.0f), angle, glm::vec3(0.0f, 1.0f, 0.0f));
 		view_matrix = camera->GetMatrix();// glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 2.0f, -10.0f));
 		glm::mat4 mvp = proj_matrix * view_matrix * model_matrix;
-		glm::mat4 mv = view_matrix * model_matrix;
+		glm::mat4 model = model_matrix;
+		glm::mat3 transInv = glm::mat3(glm::transpose(glm::inverse(model)));
 		shader->SetUniformMat4f("u_MVP", mvp);
-		shader->SetUniformMat4f("u_MV", mv);
+		shader->SetUniformMat4f("u_MODEL", model);
+		shader->SetUniformMat3f("u_TransInv", transInv);
 		shader->SetUniform3fv("u_LightPos", lightPosition);
+	//	float cameraPos[3] = { camera->GetX(), camera->GetY(), camera->GetZ() };
+		shader->SetUniform3fv("u_CameraPos", &(camera->GetPosition()[0]));
+		
 
 		renderer.Draw(va, ib, shader);
 	}
 	void Cube::OnImGuiRender()
 	{
 		ImGui::SliderFloat3("Position", translate, -5.0f, 5.0f);
+		ImGui::SliderFloat("Camera Position", &m_angle, -90, 90);
+		ImGui::SliderFloat3("Camera Look At", &(m_LookAt.x), -10, 10);
 	}
 }

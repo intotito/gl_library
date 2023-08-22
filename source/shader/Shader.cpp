@@ -85,6 +85,14 @@ void Shader::SetUniformMat4f(const char* name, glm::mat4& matrix)
     }
     glUniformMatrix4fv(location, 1, GL_FALSE, &matrix[0][0]);
 }
+void Shader::SetUniformMat3f(const char* name, glm::mat3& matrix)
+{
+    GLuint location = GetUniformLocation(name);// glGetUniformLocation(m_ID, name);
+    if (location == -1) {
+        std::cout << "Warning! Uniform Location with name " << name << " Not found!!" << std::endl;
+    }
+    glUniformMatrix3fv(location, 1, GL_FALSE, &matrix[0][0]);
+}
 
 void Shader::CompileShader(GLuint shader, const char* source)
 {

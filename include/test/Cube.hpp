@@ -27,7 +27,9 @@ namespace Test {
 		glm::mat4 proj_matrix;
 		glm::mat4 view_matrix;
 		float translate[3];
+		float m_angle = 0.0f;
 		float lightPosition[3];
+		glm::vec3 m_LookAt;
 		Camera* camera;
 	};
 }

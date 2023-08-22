@@ -14,6 +14,12 @@ public:
 	inline void SetX(float x) { position.x = x; }
 	inline void SetY(float y) { position.y = y; }
 	inline void SetZ(float z) { position.z = z; }
+	inline glm::vec3 GetPosition() { return position; }
+	inline void SetLookAt(glm::vec3& la){
+		Target.x = la.x;
+		Target.y = la.y;
+		Target.z = la.z;
+	}
 private:
 	glm::vec3 position;
 	glm::vec3 Up;
