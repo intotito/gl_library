@@ -117,7 +117,13 @@ namespace Test {
 		float diffuse[3] = {1.0f, 0.5f, 0.31f};
 		float specular[3] = { 0.5f, 0.5f, 0.5f};
 		float shininess = 32.0f;
-		float lightColor[3] = { 1.0f, 1.0f, 1.0f };
+
+		float lightAmbient[3] = {	0.2f, 0.2f, 0.2f };
+		float lightDiffuse[3] = {	0.5f, 0.5f, 0.5f };
+		float lightSpecular[3] = {	1.0f, 1.0f, 1.0f };
+
+
+
 
 
 		//	const float radius = 5.0f;
@@ -137,10 +143,9 @@ namespace Test {
 //		shader->SetUniform3fv("u_LightPos", lightPosition);
 
 		shader->SetUniform3fv("light.position", lightPosition);
-		shader->SetUniform3fv("light.color", lightColor);
-		shader->SetUniform1f("light.ambient", 0.2f);
-		shader->SetUniform1f("light.diffuse", 0.5f);
-		shader->SetUniform1f("light.specular", 1.0f);
+		shader->SetUniform3fv("light.ambient", lightAmbient);
+		shader->SetUniform3fv("light.diffuse", lightDiffuse);
+		shader->SetUniform3fv("light.specular", lightSpecular);
 
 		shader->SetUniform3fv("material.ambient", ambient);
 		shader->SetUniform3fv("material.diffuse", diffuse);

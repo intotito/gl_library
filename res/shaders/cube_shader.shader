@@ -34,10 +34,9 @@ struct Material {
 
 struct Light {
     vec3 position;
-	vec3 color;
-    float ambient;
-    float diffuse;
-    float specular;
+    vec3 ambient;
+    vec3 diffuse;
+    vec3 specular;
 };
 
 
@@ -55,17 +54,17 @@ uniform mat4 u_MVP;
 void main()
 {
 	vec4 objectColor = vec4(0.0, 0.0, 1.0, 1);
-	vec3 lightColor = vec3(1.0, 1.0, 1.0);
+//	vec3 lightColor = vec3(1.0, 1.0, 1.0);
 	vec3 viewDir = normalize(u_CameraPos - a_FragPos);
 
 
-	vec3 ambient = (light.color * light.ambient) * material.ambient ;
+	vec3 ambient = light.ambient * material.ambient ;
 
 	vec3 norm = normalize(a_Normal);
 	vec3 lightDir = normalize(light.position - a_FragPos);
 
 	float NdotL = max(dot(norm, lightDir), 0.0);
-	vec3 diffuse = (light.color * light.diffuse) * (NdotL * material.diffuse);
+	vec3 diffuse = light.diffuse * (NdotL * material.diffuse);
 
 	
 
@@ -74,7 +73,7 @@ void main()
 	vec3 specular = vec3(0.0);
 
 	if (NdotL > 0) {
-		specular = (light.color * light.specular) * (pow(NdotH, material.shininess) * material.specular);
+		specular = light.specular * (pow(NdotH, material.shininess) * material.specular);
 	}
 
 
