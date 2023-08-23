@@ -61,6 +61,14 @@ void Shader::SetUniform1i(const char* name, int value)
     }
     glUniform1i(location, value);
 }
+void Shader::SetUniform1f(const char* name, float value)
+{
+    GLuint location = GetUniformLocation(name);// glGetUniformLocation(m_ID, name);
+    if (location == -1) {
+        std::cout << "Warning! Uniform Location with name " << name << " Not found!!" << std::endl;
+    }
+    glUniform1f(location, value);
+}
 void Shader::SetUniform3fv(const char* name, GLfloat* values) {
     GLuint location = GetUniformLocation(name);// glGetUniformLocation(m_ID, name);
     if (location == -1) {

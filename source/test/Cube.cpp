@@ -113,8 +113,14 @@ namespace Test {
 			0.0f, 0.0f, 1.0f, 0.0f,
 			0.0f, 0.0f, 0.0f, 1.0f);
 
+		float ambient[3] = {1.0f, 0.5f, 0.31f};
+		float diffuse[3] = {1.0f, 0.5f, 0.31f};
+		float specular[3] = { 0.5f, 0.5f, 0.5f};
+		float shininess = 32.0f;
+		float lightColor[3] = { 1.0f, 1.0f, 1.0f };
 
-		//		const float radius = 5.0f;
+
+		//	const float radius = 5.0f;
 		camera->SetX(glm::sin(glm::radians(m_angle)) * 10.0f);
 		camera->SetZ(glm::cos(glm::radians(m_angle)) * 10.0f);
 		camera->SetLookAt(m_LookAt);
@@ -128,7 +134,20 @@ namespace Test {
 		shader->SetUniformMat4f("u_MVP", mvp);
 		shader->SetUniformMat4f("u_MODEL", model);
 		shader->SetUniformMat3f("u_TransInv", transInv);
-		shader->SetUniform3fv("u_LightPos", lightPosition);
+//		shader->SetUniform3fv("u_LightPos", lightPosition);
+
+		shader->SetUniform3fv("light.position", lightPosition);
+		shader->SetUniform3fv("light.color", lightColor);
+		shader->SetUniform1f("light.ambient", 0.2f);
+		shader->SetUniform1f("light.diffuse", 0.5f);
+		shader->SetUniform1f("light.specular", 1.0f);
+
+		shader->SetUniform3fv("material.ambient", ambient);
+		shader->SetUniform3fv("material.diffuse", diffuse);
+		shader->SetUniform3fv("material.specular", specular);
+		shader->SetUniform1f("material.shininess", shininess);
+
+
 	//	float cameraPos[3] = { camera->GetX(), camera->GetY(), camera->GetZ() };
 		shader->SetUniform3fv("u_CameraPos", &(camera->GetPosition()[0]));
 		
@@ -138,7 +157,7 @@ namespace Test {
 	void Cube::OnImGuiRender()
 	{
 		ImGui::SliderFloat3("Position", translate, -5.0f, 5.0f);
-		ImGui::SliderFloat("Camera Position", &m_angle, -90, 90);
+		ImGui::SliderFloat("Camera Position", &m_angle, -180, 180);
 		ImGui::SliderFloat3("Camera Look At", &(m_LookAt.x), -10, 10);
 	}
 }
