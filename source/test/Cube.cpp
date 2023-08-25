@@ -10,43 +10,43 @@ namespace Test {
 		camera(new Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f))),
 		ib(nullptr), vb(nullptr), va(nullptr), translate{ 0.0f, 0.0f, 0.0f }, lightPosition{0.0f, 00.0f, 5.0f },
 		proj_matrix(glm::perspective(glm::radians(45.0f), (640.0f / 480.0f), 1.f, 100.0f)), view_matrix(glm::mat4(1.0f)) {
-		GLfloat vertPos[144] = {
-			// FACE 1 - Position	-	Normal
-			 0.5f,  0.5f,  0.5f,	 0.0f, 0.0f, 1.0f,	//A - 0
-			-0.5f,  0.5f,  0.5f,	 0.0f, 0.0f, 1.0f,	//B - 1
-			-0.5f, -0.5f,  0.5f,	 0.0f, 0.0f, 1.0f,	//C - 2
-			 0.5f, -0.5f,  0.5f,	 0.0f, 0.0f, 1.0f,	//D - 3
+		GLfloat vertPos[192] = {
+			// FACE 1 - Position	-	Normal			-	Texture Coordinate
+			 0.5f,  0.5f,  0.5f,	 0.0f, 0.0f, 1.0f,		1.0f, 1.0f,	//A - 0
+			-0.5f,  0.5f,  0.5f,	 0.0f, 0.0f, 1.0f,		0.0f, 1.0f,	//B - 1
+			-0.5f, -0.5f,  0.5f,	 0.0f, 0.0f, 1.0f,		0.0f, 0.0f,	//C - 2
+			 0.5f, -0.5f,  0.5f,	 0.0f, 0.0f, 1.0f,		1.0f, 0.0f,	//D - 3
 
 			// FACE 2 - Position	-	Normal
-			-0.5f,  0.5f,  0.5f,	-1.0f, 0.0f, 0.0f,	//B - 4
-			-0.5f,  0.5f, -0.5f,	-1.0f, 0.0f, 0.0f,	//E - 5
-			-0.5f, -0.5f, -0.5f,	-1.0f, 0.0f, 0.0f,	//F - 6
-			-0.5f, -0.5f,  0.5f,	-1.0f, 0.0f, 0.0f,	//C - 7
+			-0.5f,  0.5f,  0.5f,	-1.0f, 0.0f, 0.0f,		1.0f, 1.0f,	//B - 4
+			-0.5f,  0.5f, -0.5f,	-1.0f, 0.0f, 0.0f,		0.0f, 1.0f,	//E - 5
+			-0.5f, -0.5f, -0.5f,	-1.0f, 0.0f, 0.0f,		0.0f, 0.0f,	//F - 6
+			-0.5f, -0.5f,  0.5f,	-1.0f, 0.0f, 0.0f,		1.0f, 0.0f,	//C - 7
 
 			// FACE 3 - Position	-	Normal
-			-0.5f,  0.5f, -0.5f,	 0.0f, 0.0f, -1.0f,	//E - 8
-			 0.5f,  0.5f, -0.5f,	 0.0f, 0.0f, -1.0f,	//G - 9
-			 0.5f, -0.5f, -0.5f,	 0.0f, 0.0f, -1.0f,	//H - 10
-			-0.5f, -0.5f, -0.5f,	 0.0f, 0.0f, -1.0f,	//F - 11
+			-0.5f,  0.5f, -0.5f,	 0.0f, 0.0f, -1.0f,		1.0f, 1.0f,	//E - 8
+			 0.5f,  0.5f, -0.5f,	 0.0f, 0.0f, -1.0f,		0.0f, 1.0f,	//G - 9
+			 0.5f, -0.5f, -0.5f,	 0.0f, 0.0f, -1.0f,		0.0f, 0.0f,	//H - 10
+			-0.5f, -0.5f, -0.5f,	 0.0f, 0.0f, -1.0f,		1.0f, 0.0f,	//F - 11
 
 			 // FACE 4 - Position	-	Normal
 
-			 0.5f,  0.5f,  0.5f,	1.0f, 0.0f, 0.0f,	//A - 12
-			 0.5f, -0.5f,  0.5f,	1.0f, 0.0f, 0.0f,	//D - 13
-			 0.5f, -0.5f, -0.5f,	1.0f, 0.0f, 0.0f,	//H - 14
-			 0.5f,  0.5f, -0.5f,	1.0f, 0.0f, 0.0f,	//G - 15
+			 0.5f,  0.5f,  0.5f,	1.0f, 0.0f, 0.0f,		0.0f, 1.0f,	//A - 12
+			 0.5f, -0.5f,  0.5f,	1.0f, 0.0f, 0.0f,		0.0f, 0.0f,	//D - 13
+			 0.5f, -0.5f, -0.5f,	1.0f, 0.0f, 0.0f,		1.0f, 0.0f,	//H - 14
+			 0.5f,  0.5f, -0.5f,	1.0f, 0.0f, 0.0f,		1.0f, 1.0f,	//G - 15
 
 			 // FACE 5 - Position	-	Normal
-			 0.5f,  0.5f,  0.5f,	0.0f, 1.0f, 0.0f,	//A - 16
-			 0.5f,  0.5f, -0.5f,	0.0f, 1.0f, 0.0f,	//G - 17
-			-0.5f,  0.5f, -0.5f,	0.0f, 1.0f, 0.0f,	//E - 18
-			-0.5f,  0.5f,  0.5f,	0.0f, 1.0f, 0.0f,	//B - 19
+			 0.5f,  0.5f,  0.5f,	0.0f, 1.0f, 0.0f,		0.0f, 0.0f,	//A - 16
+			 0.5f,  0.5f, -0.5f,	0.0f, 1.0f, 0.0f,		1.0f, 0.0f,	//G - 17
+			-0.5f,  0.5f, -0.5f,	0.0f, 1.0f, 0.0f,		1.0f, 1.0f,	//E - 18
+			-0.5f,  0.5f,  0.5f,	0.0f, 1.0f, 0.0f,		0.0f, 1.0f,	//B - 19
 			
 			// FACE 6 - Position	-	Normal
-			-0.5f, -0.5f,  0.5f,	0.0f, -1.0f, 0.0f,	//C - 20
-			-0.5f, -0.5f, -0.5f,	0.0f, -1.0f, 0.0f,	//F - 21
-			 0.5f, -0.5f, -0.5f,	0.0f, -1.0f, 0.0f,	//H - 22	
-			 0.5f, -0.5f,  0.5f,	0.0f, -1.0f, 0.0f	//D - 23
+			-0.5f, -0.5f,  0.5f,	0.0f, -1.0f, 0.0f,		1.0f, 0.0f,	//C - 20
+			-0.5f, -0.5f, -0.5f,	0.0f, -1.0f, 0.0f,		1.0f, 1.0f,	//F - 21
+			 0.5f, -0.5f, -0.5f,	0.0f, -1.0f, 0.0f,		0.0f, 1.0f,	//H - 22	
+			 0.5f, -0.5f,  0.5f,	0.0f, -1.0f, 0.0f, 		0.0f, 0.0f	//D - 23
 		};
 		GLuint indices[36] = {
 			0, 1, 2,		2, 3, 0,	// FACE 1 (ABCD)
@@ -63,7 +63,7 @@ namespace Test {
 
 		va = new VertexArray();
 		va->Bind();
-		vb = new VertexBuffer(vertPos, 144 * sizeof(GLfloat));
+		vb = new VertexBuffer(vertPos, 192 * sizeof(GLfloat));
 		//		vb->Bind();
 		//		vb->SetData(vertPos, 28 * sizeof(GLfloat));
 
@@ -75,10 +75,15 @@ namespace Test {
 		VertexArrayAttribute* vaa1 = new VertexArrayAttribute{
 			1, 3, GL_FLOAT, GL_FALSE, "Normal"
 		};
+
+		VertexArrayAttribute* vaa2 = new VertexArrayAttribute{
+			2, 2, GL_FLOAT, GL_FALSE, "TexCoords"
+		};
 		
 		VertexBufferLayout* vbl = new VertexBufferLayout();
 		vbl->Add(vaa);
 		vbl->Add(vaa1);
+		vbl->Add(vaa2);
 		
 		va->AddLayout(vbl, vb);
 
@@ -90,6 +95,14 @@ namespace Test {
 		std::string fileName = "res/Shaders/cube_shader.shader";
 		shader = new Shader(fileName);
 		shader->Bind();
+
+		GLuint diffuseSample = Texture::LoadTexture("res/textures/crate_texture_diffuse.png");
+		GLuint specularSample = Texture::LoadTexture("res/textures/crate_texture_specular.png");
+		GLuint emissionSample = Texture::LoadTexture("res/textures/matrix.jpg");
+		Texture::Bind(diffuseSample, 0);
+		Texture::Bind(specularSample, 1);
+		Texture::Bind(emissionSample, 2);
+
 		
 	}
 
@@ -106,7 +119,7 @@ namespace Test {
 	}
 	void Cube::OnRender(Renderer& renderer)
 	{
-		float angle = (float)glfwGetTime() / 10.0f;
+		float angle = (float)glfwGetTime() / 5.0f;
 		glm::mat4 rotate(
 			glm::cos(angle), glm::sin(angle), 0.0f, 0.0f,
 			-sin(angle), glm::cos(angle), 0.0f, 0.0f,
@@ -132,11 +145,14 @@ namespace Test {
 		camera->SetLookAt(m_LookAt);
 
 		glm::mat4 model_matrix = glm::translate(glm::mat4(1.0f),
-			glm::vec3(translate[0], translate[1], translate[2])) * glm::rotate(glm::mat4(1.0f), angle, glm::vec3(0.0f, 1.0f, 0.0f));
+			glm::vec3(translate[0], translate[1], translate[2]));// *glm::rotate(glm::mat4(1.0f), angle, glm::vec3(0.0f, 1.0f, 0.0f));
 		view_matrix = camera->GetMatrix();// glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 2.0f, -10.0f));
 		glm::mat4 mvp = proj_matrix * view_matrix * model_matrix;
 		glm::mat4 model = model_matrix;
 		glm::mat3 transInv = glm::mat3(glm::transpose(glm::inverse(model)));
+
+		shader->SetUniform1f("u_Time", angle);
+
 		shader->SetUniformMat4f("u_MVP", mvp);
 		shader->SetUniformMat4f("u_MODEL", model);
 		shader->SetUniformMat3f("u_TransInv", transInv);
@@ -147,9 +163,12 @@ namespace Test {
 		shader->SetUniform3fv("light.diffuse", lightDiffuse);
 		shader->SetUniform3fv("light.specular", lightSpecular);
 
-		shader->SetUniform3fv("material.ambient", ambient);
-		shader->SetUniform3fv("material.diffuse", diffuse);
-		shader->SetUniform3fv("material.specular", specular);
+	//	shader->SetUniform3fv("material.ambient", ambient);
+		shader->SetUniform1i("material.diffuse", 0);
+		shader->SetUniform1i("material.specular", 1);
+		shader->SetUniform1i("material.emission", 2);
+//		shader->SetUniform3fv("material.diffuse", diffuse);
+//		shader->SetUniform3fv("material.specular", specular);
 		shader->SetUniform1f("material.shininess", shininess);
 
 

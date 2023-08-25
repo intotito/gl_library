@@ -3,6 +3,7 @@
 
 layout(location = 0) in vec3 position;
 layout(location = 1) in vec3 normal;
+layout(location = 2) in vec2 texCoords;
 
 
 uniform mat4 u_MVP;
@@ -11,24 +12,22 @@ uniform mat3 u_TransInv;
 
 out vec3 a_Normal;
 out vec3 a_FragPos;
+out vec2 a_TexCoords;
 void main()
 {
-	//	gl_Position = vec4(position, 0.0f, 1.0f);
 	gl_Position = u_MVP * vec4(position, 1.0f);
-//	a_Normal = vec3(u_MVP * vec4(normal, 0));
-	a_Normal = u_TransInv * normal;//vec3(u_MODEL * vec4(normal, 0));
+	a_Normal = u_TransInv * normal;
 	a_FragPos = vec3(u_MODEL * vec4(position, 1.0f));
-	//fColor = vexColor;
-	//testColor = position;
+	a_TexCoords = texCoords;
 };
 
 #SHADER FRAGMENT
 #version 330 core
 
 struct Material {
-	vec3 ambient;
-	vec3 diffuse;
-	vec3 specular;
+	sampler2D diffuse;
+	sampler2D specular;
+	sampler2D emission;
 	float shininess;
 };
 
@@ -44,27 +43,26 @@ struct Light {
 layout(location = 0) out vec4 color;
 in vec3 a_Normal;
 in vec3 a_FragPos;
+in vec2 a_TexCoords;
 
 uniform Light light; 
 uniform Material material;
 uniform vec3 u_CameraPos;
 uniform sampler2D u_Texture[2];
-//uniform vec3 u_LightPos;
 uniform mat4 u_MVP;
+uniform float u_Time;
 void main()
 {
-	vec4 objectColor = vec4(0.0, 0.0, 1.0, 1);
-//	vec3 lightColor = vec3(1.0, 1.0, 1.0);
 	vec3 viewDir = normalize(u_CameraPos - a_FragPos);
 
 
-	vec3 ambient = light.ambient * material.ambient ;
+	vec3 ambient = light.ambient * vec3(texture(material.diffuse, a_TexCoords));// * material.ambient ;
 
 	vec3 norm = normalize(a_Normal);
 	vec3 lightDir = normalize(light.position - a_FragPos);
 
 	float NdotL = max(dot(norm, lightDir), 0.0);
-	vec3 diffuse = light.diffuse * (NdotL * material.diffuse);
+	vec3 diffuse = light.diffuse * NdotL * vec3(texture(material.diffuse, a_TexCoords));
 
 	
 
@@ -73,12 +71,20 @@ void main()
 	vec3 specular = vec3(0.0);
 
 	if (NdotL > 0) {
-		specular = light.specular * (pow(NdotH, material.shininess) * material.specular);
+		specular = light.specular * (pow(NdotH, material.shininess) * vec3(texture(material.specular, a_TexCoords)));
+	}
+
+	vec3 emission = vec3(0.0);
+
+	if(texture(material.specular, a_TexCoords).r < 0.1){
+		emission = vec3(texture(material.emission, a_TexCoords + vec2(0.0, u_Time)));
+		emission = emission * (sin(u_Time) * 0.5 + 0.5) * 2.0;
 	}
 
 
-	vec3 result = clamp(ambient + diffuse + specular, 0, 1);
+//	vec3 result = clamp(diffuse + specular, 0, 1);
+	vec3 result = clamp(ambient + diffuse + specular + emission, 0, 1);
 	color = vec4(result, 1.0);
 
-	//color = vec4(1, 0, 0, 1);
+//	color = vec4(1, 0, 0, 1);
 };
