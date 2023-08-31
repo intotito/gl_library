@@ -1,3 +1,10 @@
-﻿  Cube.cpp
-C:\Users\intot\OpenGL_1\OpenGL_1\include\test\Test.hpp(12,36): warning C4227: anachronism used: qualifiers on reference are ignored
+﻿  main.cpp
+C:\Users\intot\OpenGL_1\OpenGL_1\include\test\Test.hpp(12,21): warning C4227: anachronism used: qualifiers on reference are ignored
+C:\Users\intot\OpenGL_1\OpenGL_1\include\Mesh.hpp(28,55): warning C4267: 'return': conversion from 'size_t' to 'unsigned int', possible loss of data
+C:\Users\intot\OpenGL_1\OpenGL_1\main.cpp(141,12): warning C4930: 'Camera camera(void)': prototyped function not called (was a variable definition intended?)
+  Object.cpp
+C:\Users\intot\OpenGL_1\OpenGL_1\include\Mesh.hpp(28,55): warning C4267: 'return': conversion from 'size_t' to 'unsigned int', possible loss of data
+  Jaw.cpp
+C:\Users\intot\OpenGL_1\OpenGL_1\include\Mesh.hpp(28,55): warning C4267: 'return': conversion from 'size_t' to 'unsigned int', possible loss of data
+  Generating Code...
   OpenGL_1.vcxproj -> C:\Users\intot\OpenGL_1\x64\Debug\OpenGL_1.exe

@@ -33,9 +33,18 @@ struct Material {
 
 struct Light {
     vec3 position;
+	vec3 direction;
+
     vec3 ambient;
     vec3 diffuse;
     vec3 specular;
+
+	float constant;
+	float linear;
+	float quadratic;
+
+	float cutOff;
+	float outerCutOff;
 };
 
 
@@ -53,18 +62,22 @@ uniform mat4 u_MVP;
 uniform float u_Time;
 void main()
 {
+	float distance = length(light.position - a_FragPos);
+	float attenuation = 1.0 / (light.constant + distance * light.linear + distance * distance * light.quadratic);
 	vec3 viewDir = normalize(u_CameraPos - a_FragPos);
 
 
 	vec3 ambient = light.ambient * vec3(texture(material.diffuse, a_TexCoords));// * material.ambient ;
 
 	vec3 norm = normalize(a_Normal);
-	vec3 lightDir = normalize(light.position - a_FragPos);
-
+//	vec3 lightDir = normalize(light.position - a_FragPos);
+	vec3 lightDir = normalize(u_CameraPos - a_FragPos);
 	float NdotL = max(dot(norm, lightDir), 0.0);
 	vec3 diffuse = light.diffuse * NdotL * vec3(texture(material.diffuse, a_TexCoords));
 
 	
+	float theta = dot(lightDir, normalize(-light.direction));
+	float epsilon = light.cutOff - light.outerCutOff;
 
 	vec3 H = reflect(-lightDir, norm);
 	float NdotH = max(dot(viewDir, H),	0);
@@ -77,14 +90,26 @@ void main()
 	vec3 emission = vec3(0.0);
 
 	if(texture(material.specular, a_TexCoords).r < 0.1){
-		emission = vec3(texture(material.emission, a_TexCoords + vec2(0.0, u_Time)));
-		emission = emission * (sin(u_Time) * 0.5 + 0.5) * 2.0;
+//		emission = vec3(texture(material.emission, a_TexCoords + vec2(0.0, u_Time)));
+	//	emission = emission * (sin(u_Time) * 0.5 + 0.5) * 2.0;
 	}
 
+	ambient *= attenuation;
+	diffuse *= attenuation;
+	specular *= attenuation;
 
 //	vec3 result = clamp(diffuse + specular, 0, 1);
-	vec3 result = clamp(ambient + diffuse + specular + emission, 0, 1);
-	color = vec4(result, 1.0);
+//	vec3 result = clamp(ambient + diffuse + specular + emission, 0, 1);
+	if(theta > light.cutOff){
+		float bias = clamp((theta - light.outerCutOff) / epsilon, 0.0, 1.0);
+//		ambient *=	bias;
+		diffuse *=	bias;
+		specular *=	bias;
+		color = vec4(clamp(ambient + diffuse + specular + emission, 0, 1), 1);
+	}
+	else{
+		color = vec4(ambient, 1);
+	}
 
 //	color = vec4(1, 0, 0, 1);
 };

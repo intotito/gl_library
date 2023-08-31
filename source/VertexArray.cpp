@@ -34,6 +34,7 @@ void VertexArray::Unbind() {
 }
 */
 void VertexArray::AddLayout(VertexBufferLayout* vbl, VertexBuffer* vb) {
+	vb->Bind();
 	const auto& elements = vbl->GetAttributes();
 	int pointer = 0;
 	for (int i = 0; i < elements.size(); i++) {

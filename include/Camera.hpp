@@ -11,6 +11,7 @@ public:
 	inline float GetX() { return position.x; }
 	inline float GetY() { return position.y; }
 	inline float GetZ() { return position.z; }
+	inline glm::vec3 GetFront() { return Target; }
 	inline void SetX(float x) { position.x = x; }
 	inline void SetY(float y) { position.y = y; }
 	inline void SetZ(float z) { position.z = z; }

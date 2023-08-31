@@ -7,7 +7,7 @@
 #include<shader/Shader.hpp>
 
 #define ASSERT(x) if (!(x)) __debugbreak();
-#define GLtry(x) ClearError(); x; ASSERT(CheckError(__FILE__, #x, __LINE__));
+#define GLtry(x) ClearError(); x; ASSERT(CheckError(__FILE__, #x, __LINE__));0
 
 void ClearError();
 bool CheckError(const char* file, const char* function, int line);

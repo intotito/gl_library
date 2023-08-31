@@ -2,12 +2,12 @@
 #include<VertexBufferLayout.hpp>
 #include<texture/Texture.hpp>
 #include <vendor/glm/glm.hpp>
-
+#include<Jaw.hpp>
 
 namespace Test {
 
-	Cube::Cube(std::string testName) : Test(testName), m_LookAt(glm::vec3(0.0f, 0.0f, 0.0f)),
-		camera(new Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f))),
+	Cube::Cube(std::string testName) : Test(testName), m_LookAt(glm::vec3(0.0f, 0.0f, -1.0f)),
+		camera(new Camera(glm::vec3(0.0f, 0.0f, -5.0f), glm::vec3(0.0f, 1.0f, 0.0f))),
 		ib(nullptr), vb(nullptr), va(nullptr), translate{ 0.0f, 0.0f, 0.0f }, lightPosition{0.0f, 00.0f, 5.0f },
 		proj_matrix(glm::perspective(glm::radians(45.0f), (640.0f / 480.0f), 1.f, 100.0f)), view_matrix(glm::mat4(1.0f)) {
 		GLfloat vertPos[192] = {
@@ -158,10 +158,16 @@ namespace Test {
 		shader->SetUniformMat3f("u_TransInv", transInv);
 //		shader->SetUniform3fv("u_LightPos", lightPosition);
 
+		shader->SetUniform3fv("light.direction", &(camera->GetFront()[0]));
+
 		shader->SetUniform3fv("light.position", lightPosition);
 		shader->SetUniform3fv("light.ambient", lightAmbient);
 		shader->SetUniform3fv("light.diffuse", lightDiffuse);
 		shader->SetUniform3fv("light.specular", lightSpecular);
+
+		shader->SetUniform1f("light.cutOff", glm::cos(12.5f));
+		shader->SetUniform1f("light.outerCutOff", glm::cos(17.5f));
+
 
 	//	shader->SetUniform3fv("material.ambient", ambient);
 		shader->SetUniform1i("material.diffuse", 0);
@@ -170,6 +176,10 @@ namespace Test {
 //		shader->SetUniform3fv("material.diffuse", diffuse);
 //		shader->SetUniform3fv("material.specular", specular);
 		shader->SetUniform1f("material.shininess", shininess);
+
+		shader->SetUniform1f("light.constant", 1.0f);
+		shader->SetUniform1f("light.linear", 0.09f);
+		shader->SetUniform1f("light.quadratic", 0.032f);
 
 
 	//	float cameraPos[3] = { camera->GetX(), camera->GetY(), camera->GetZ() };
@@ -180,7 +190,7 @@ namespace Test {
 	}
 	void Cube::OnImGuiRender()
 	{
-		ImGui::SliderFloat3("Position", translate, -5.0f, 5.0f);
+		ImGui::SliderFloat3("Position", translate, -15.0f, 15.0f);
 		ImGui::SliderFloat("Camera Position", &m_angle, -180, 180);
 		ImGui::SliderFloat3("Camera Look At", &(m_LookAt.x), -10, 10);
 	}

@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="GLWindow.cpp" />
+    <ClCompile Include="source\Camera.cpp" />
     <ClCompile Include="include\vendor\imgui\imgui.cpp" />
     <ClCompile Include="include\vendor\imgui\imgui_demo.cpp" />
     <ClCompile Include="include\vendor\imgui\imgui_draw.cpp" />
@@ -150,9 +151,12 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="source\buffers\IndexBuffer.cpp" />
     <ClCompile Include="source\buffers\VertexBuffer.cpp" />
+    <ClCompile Include="source\Mesh.cpp" />
+    <ClCompile Include="source\Object.cpp" />
     <ClCompile Include="source\Renderer.cpp" />
     <ClCompile Include="source\shader\Shader.cpp" />
     <ClCompile Include="source\test\Cube.cpp" />
+    <ClCompile Include="source\test\Jaw.cpp" />
     <ClCompile Include="source\test\Texture2D.cpp" />
     <ClCompile Include="source\test\ClearColor.cpp" />
     <ClCompile Include="source\test\Test.cpp" />
@@ -166,9 +170,13 @@
     <ClInclude Include="GLWindow.hpp" />
     <ClInclude Include="include\buffers\IndexBuffer.hpp" />
     <ClInclude Include="include\buffers\VertexBuffer.hpp" />
+    <ClInclude Include="include\Camera.hpp" />
+    <ClInclude Include="include\Mesh.hpp" />
+    <ClInclude Include="include\Object.hpp" />
     <ClInclude Include="include\Renderer.hpp" />
     <ClInclude Include="include\shader\Shader.hpp" />
     <ClInclude Include="include\test\Cube.hpp" />
+    <ClInclude Include="include\test\Jaw.hpp" />
     <ClInclude Include="include\test\Texture2D.hpp" />
     <ClInclude Include="include\test\ClearColor.hpp" />
     <ClInclude Include="include\test\Test.hpp" />
