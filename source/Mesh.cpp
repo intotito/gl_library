@@ -22,6 +22,7 @@ void Mesh::Parse(float* data, int size)
 				* (data + (i * stride) + 8) 
 			});
 	}
+//	Format();
 }
 
 float* Mesh::Data()
@@ -29,11 +30,22 @@ float* Mesh::Data()
 	return (float*)( & (vertices[0].position));
 }
 
-void Mesh::Format()
+void Mesh::Transform(mat4 matrix)
 {
+//	matrix = glm::mat4(1.0f);
 	for (int i = 0; i < vertices.size(); i++) {
-		std::cout << "Position = (" << vertices[i].position.x << ", " << vertices[i].position.y
-			<< ", " << vertices[i].position.z << ")" << std::endl;
+		vertices[i].position = matrix * vec4(vertices[i].position, 1.0f);
+		vertices[i].normal = matrix * vec4(vertices[i].position, 1.0f);
+	}
+	origin = matrix * vec4(origin, 1.0f);
+}
+
+void Mesh::Format(float angle)
+{
+	rotation.x += angle;
+	for (int i = 0; i < vertices.size(); i++) {
+	//	std::cout << "Position = (" << vertices[i].position.x << ", " << vertices[i].position.y
+	//		<< ", " << vertices[i].position.z << ")" << std::endl;
 
 	mat4 translate1 = mat4(
 		vec4(1.0f, 0.0f, 0.0f, 0.0f), 
@@ -44,10 +56,10 @@ void Mesh::Format()
 				-origin.z, 1.0f)
 	);
 	mat4 rotate = mat4(
-		vec4(1.0f,	0.0f,				0.0f,				0.0f),
-		vec4(0.0f,	cos(rotation.x),	sin(rotation.x),	0.0f),
-		vec4(0.0f,	-sin(rotation.x),	cos(rotation.x),	0.0f),
-		vec4(0.0f,	0.0f,				0.0f,				1.0f)
+		vec4(1.0f,	 0.0f,				0.0f,				0.0f),
+		vec4(0.0f,	 cos(angle),		sin(angle),			0.0f),
+		vec4(0.0f,	-sin(angle),		cos(angle),			0.0f),
+		vec4(0.0f,	 0.0f,				0.0f,				1.0f)
 	);
 	mat4 translate2 = mat4(
 		vec4(1.0f, 0.0f, 0.0f, 0.0f),
@@ -60,6 +72,7 @@ void Mesh::Format()
 	);
 	
 	vertices[i].position = translate2 * rotate * translate1 * vec4(vertices[i].position, 1.0f);
+	vertices[i].normal = translate2 * rotate * translate1 * vec4(vertices[i].normal, 1.0f);
 //	std::cout << "'Position = (" << vertices[i].position.x << ", " << vertices[i].position.y
 //		<< ", " << vertices[i].position.z << ")" << std::endl;
 	}

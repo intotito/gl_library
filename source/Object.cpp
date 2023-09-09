@@ -1,13 +1,13 @@
 #include <Object.hpp>
 
-Object::Object() : indices(nullptr), indexCount(0)
+Object::Object() :	indices(nullptr), indexCount(0), sceneAddress(0), indexAddress(0), vb(NULL), transform(Transform())
 {
-	transpose_inverse_matrix = glm::mat3(glm::transpose(glm::inverse(model_matrix)));
+	transform.SetContainer(this);
 }
 
 Object::~Object()
 {
-	delete indices;
+	free(indices);
 }
 
 void Object::AddMesh(Mesh mesh)
@@ -15,40 +15,36 @@ void Object::AddMesh(Mesh mesh)
 	Object::mesh.push_back(mesh);
 }
 
-int Object::GetCount()
+float* Object::GetData()
 {
-	int count = 0;
+	return mesh[0].Data();
+
+}
+
+unsigned int Object::GetCount()
+{
+	unsigned int count = 0;
 	for (int i = 0; i < mesh.size(); i++)
 	{
-		count += mesh[i].GetCount();
+		count += mesh[i].GetRawCount();
 	}
 	return count;
 }
 
-glm::mat4 Object::GetModelMatrix()
+void Object::TransformObject(glm::mat4 matrix) {
+	for (int i = 0; i < mesh.size(); i++)
+	{
+		mesh[i].Transform(matrix);
+	}
+}
+
+unsigned int* Object::GetIndices(unsigned int offset)
 {
-	if (state_changed) {
-		model_matrix[3][0] = translation.x;
-		model_matrix[3][1] = translation.y;
-		model_matrix[3][2] = translation.z;
-	} 
-	state_changed = false;
-	return model_matrix;
-}
-
-void Object::Translate(glm::vec3 translation) {
-	if(!glm::all(glm::equal(Object::translation, translation))){
-		state_changed = true;
-	}
-	Object::translation = translation;
-
-}
-
-void Object::RTranslate(glm::vec3 rTranslation) {
-	translation += rTranslation;
-	if (glm::length(rTranslation) > glm::epsilon<float>()) {
-		state_changed = true;
-	}
+	unsigned int* ind = (unsigned int*)malloc(sizeof(unsigned int) * indexCount);
+	for (int i = 0; i < indexCount; i++)
+	{
+		*(ind + i) = offset + *(indices + i);	}
+	return ind;
 }
 
 void Object::GenerateIndices()
@@ -61,16 +57,24 @@ void Object::GenerateIndices()
 	indexCount = triangles * 3;
 
 	indices = (unsigned int*)malloc(sizeof(unsigned int) * indexCount);
-	int seq[6] = {0, 1, 2, 2, 3, 0};
+	int seq[6] = { 0, 1, 2, 2, 3, 0 };
 	for (int i = 0; i < faces; i++) {	// 12
 		int aaa = i * 4;
 		for (int j = 0; j < (sizeof(seq) / sizeof(int)); j++) {		// 6
-
 			unsigned int index = (i * ((sizeof(seq) / sizeof(int)))) + j;
 			unsigned int value = aaa + seq[j];
-
 			*(indices + index) = value;
 		}
 	}
 
+}
+
+void Object::OnUpdate(float deltaTime)
+{
+	transform.Update();
+}
+
+void Object::OnStart()
+{
+	transform.Update();
 }

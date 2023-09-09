@@ -1,6 +1,6 @@
 #include <VertexArray.hpp>
 
-VertexArray::VertexArray()
+VertexArray::VertexArray(): m_ID(0)
 {
 	glGenVertexArrays(1, &m_ID);
 }
@@ -8,6 +8,7 @@ VertexArray::VertexArray()
 VertexArray::~VertexArray()
 {
 	Unbind();
+	glDeleteVertexArrays(1, &m_ID); 
 }
 
 void VertexArray::Bind() {
@@ -38,7 +39,7 @@ void VertexArray::AddLayout(VertexBufferLayout* vbl, VertexBuffer* vb) {
 	const auto& elements = vbl->GetAttributes();
 	int pointer = 0;
 	for (int i = 0; i < elements.size(); i++) {
-		const auto& element = elements[i];
+		VertexArrayAttribute* element = elements[i];
 		glEnableVertexAttribArray(element->index);
 		glVertexAttribPointer(element->index, element->count, element->type, element->normalized, vbl->GetStride(), (void*)pointer);
 		pointer += (element->count * element->GetSize());

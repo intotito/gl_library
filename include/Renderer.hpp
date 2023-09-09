@@ -5,6 +5,7 @@
 #include <VertexArray.hpp>
 #include<buffers/IndexBuffer.hpp>
 #include<shader/Shader.hpp>
+//#include<Scene.hpp>
 
 #define ASSERT(x) if (!(x)) __debugbreak();
 #define GLtry(x) ClearError(); x; ASSERT(CheckError(__FILE__, #x, __LINE__));0
@@ -15,6 +16,10 @@ class Renderer {
 public:
     Renderer();
     ~Renderer();
+ //   void AddScene(Scene* scene);
     void Clear();
-    void Draw(VertexArray* va, IndexBuffer* ib, Shader* shader);    
+    void Draw(VertexArray* va, IndexBuffer* ib, Shader* shader); 
+private:
+ //   std::vector<Scene*> scenes;
+ //   Scene* current_scene;
 };

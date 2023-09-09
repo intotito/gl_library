@@ -90,7 +90,7 @@ void main()
 	vec3 emission = vec3(0.0);
 
 	if(texture(material.specular, a_TexCoords).r < 0.1){
-//		emission = vec3(texture(material.emission, a_TexCoords + vec2(0.0, u_Time)));
+		emission = vec3(texture(material.emission, a_TexCoords + vec2(0.0, u_Time)));
 	//	emission = emission * (sin(u_Time) * 0.5 + 0.5) * 2.0;
 	}
 

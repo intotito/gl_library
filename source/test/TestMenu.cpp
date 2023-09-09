@@ -24,6 +24,7 @@ namespace Test {
 			{
 				if (ImGui::Button(test.first.c_str())) {
 					currentTest = test.second();
+					currentTest->OnStart();
 				}
 			}
 		}

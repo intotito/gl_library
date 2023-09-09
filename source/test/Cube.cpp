@@ -2,12 +2,12 @@
 #include<VertexBufferLayout.hpp>
 #include<texture/Texture.hpp>
 #include <vendor/glm/glm.hpp>
-#include<Jaw.hpp>
+
 
 namespace Test {
 
 	Cube::Cube(std::string testName) : Test(testName), m_LookAt(glm::vec3(0.0f, 0.0f, -1.0f)),
-		camera(new Camera(glm::vec3(0.0f, 0.0f, -5.0f), glm::vec3(0.0f, 1.0f, 0.0f))),
+		camera(new Camera(glm::vec3(0.0f, 0.0f, -5.0f), glm::vec3(0.0f, 1.0f, 0.0f))), jaw(Jaw()),
 		ib(nullptr), vb(nullptr), va(nullptr), translate{ 0.0f, 0.0f, 0.0f }, lightPosition{0.0f, 00.0f, 5.0f },
 		proj_matrix(glm::perspective(glm::radians(45.0f), (640.0f / 480.0f), 1.f, 100.0f)), view_matrix(glm::mat4(1.0f)) {
 		GLfloat vertPos[192] = {
@@ -58,12 +58,15 @@ namespace Test {
 		};
 
 		
-			
+		//jaw = Jaw();
+
 		
 
 		va = new VertexArray();
 		va->Bind();
-		vb = new VertexBuffer(vertPos, 192 * sizeof(GLfloat));
+//		vb = new VertexBuffer(vertPos, 192 * sizeof(GLfloat));
+//		vb = new VertexBuffer(jaw.GetData(), jaw.GetCount() * sizeof(GLfloat) / 2);
+		vb = new VertexBuffer(jaw);
 		//		vb->Bind();
 		//		vb->SetData(vertPos, 28 * sizeof(GLfloat));
 
@@ -79,18 +82,24 @@ namespace Test {
 		VertexArrayAttribute* vaa2 = new VertexArrayAttribute{
 			2, 2, GL_FLOAT, GL_FALSE, "TexCoords"
 		};
+
+		VertexArrayAttribute* vaa3 = new VertexArrayAttribute{
+			3, 1, GL_FLOAT, GL_FALSE, "TexID"
+		};
 		
 		VertexBufferLayout* vbl = new VertexBufferLayout();
 		vbl->Add(vaa);
 		vbl->Add(vaa1);
 		vbl->Add(vaa2);
+		vbl->Add(vaa3);
 		
 		va->AddLayout(vbl, vb);
 
 		//		ib = new IndexBuffer(indices, 15);
 		ib = new IndexBuffer();
 		ib->Bind();
-		ib->SetData(indices, 36);
+	//	ib->SetData(indices, 36);
+		ib->SetData(jaw.GetIndices(), jaw.GetIndexCount());
 
 		std::string fileName = "res/Shaders/cube_shader.shader";
 		shader = new Shader(fileName);
@@ -119,7 +128,12 @@ namespace Test {
 	}
 	void Cube::OnRender(Renderer& renderer)
 	{
-		float angle = (float)glfwGetTime() / 5.0f;
+	//	float angle = (float)glfwGetTime() / 5.0f;
+
+		static float timer = glfwGetTime();
+		float angle = (glfwGetTime() - timer) * 20;
+		timer = glfwGetTime();
+
 		glm::mat4 rotate(
 			glm::cos(angle), glm::sin(angle), 0.0f, 0.0f,
 			-sin(angle), glm::cos(angle), 0.0f, 0.0f,
@@ -146,7 +160,8 @@ namespace Test {
 
 		glm::mat4 model_matrix = glm::translate(glm::mat4(1.0f),
 			glm::vec3(translate[0], translate[1], translate[2]));// *glm::rotate(glm::mat4(1.0f), angle, glm::vec3(0.0f, 1.0f, 0.0f));
-		view_matrix = camera->GetMatrix();// glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 2.0f, -10.0f));
+		model_matrix = glm::rotate(model_matrix, angle * 1.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+		view_matrix = camera->GetMatrix();// , angle * 2.5f, glm::vec3(0.0f, 1.0f, 0.0f));
 		glm::mat4 mvp = proj_matrix * view_matrix * model_matrix;
 		glm::mat4 model = model_matrix;
 		glm::mat3 transInv = glm::mat3(glm::transpose(glm::inverse(model)));
@@ -185,8 +200,8 @@ namespace Test {
 	//	float cameraPos[3] = { camera->GetX(), camera->GetY(), camera->GetZ() };
 		shader->SetUniform3fv("u_CameraPos", &(camera->GetPosition()[0]));
 		
-
 		renderer.Draw(va, ib, shader);
+		jaw.OnUpdate(angle / 10.0f);
 	}
 	void Cube::OnImGuiRender()
 	{

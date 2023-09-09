@@ -9,6 +9,7 @@ namespace Test {
 		virtual void OnUpdate(float deltaTime);
 		virtual void OnRender(Renderer& renderer);
 		virtual void OnImGuiRender();
+		virtual void OnStart();
 		inline std::string& const GetName() { return name; } 
 	private:
 		std::string name;

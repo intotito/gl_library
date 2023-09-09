@@ -30,4 +30,9 @@ namespace Test {
 	{
 
 	}
+
+	void Test::OnStart()
+	{
+
+	}
 }

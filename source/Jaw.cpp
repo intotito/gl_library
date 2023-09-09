@@ -1,6 +1,7 @@
 #include <Jaw.hpp>
 
-
+const float Jaw::MAX_ANGLE_RAD = glm::radians(0.0f);
+const float Jaw::MIN_ANGLE_RAD = glm::radians(-90.0f);
 Jaw::Jaw() : Object()
 {
 	float data[432] = {
@@ -89,7 +90,11 @@ Jaw::Jaw() : Object()
 */
 
 	Mesh m = Mesh(data, (sizeof(data) / sizeof(float)) / 2);
+
 	Mesh m1 = Mesh(data + (sizeof(data) / sizeof(float)) / 2, (sizeof(data) / sizeof(float)) / 2);
+
+//	m1.Format(glm::radians(90.0f));
+//	GenerateMesh();
 	AddMesh(m);
 	AddMesh(m1);
 	GenerateIndices();
@@ -98,4 +103,25 @@ Jaw::~Jaw()
 {
 
 }
+
+void Jaw::OnUpdate(float deltaTime) 
+{
+	static int sign = -1;
+//	float angle = mesh[1].rotation.x;
+	float angle = glm::radians(deltaTime);
+	
+	mesh[1].Format(angle);
+
+
+//	glGenBuffers(1, &m_ID);
+	glBindBuffer(GL_ARRAY_BUFFER, vb);
+	
+	float offset = GetSceneAddress() + mesh[0].GetByteSize();
+	glBufferSubData(GL_ARRAY_BUFFER, offset, mesh[1].GetByteSize(), mesh[1].Data());
+
+
+//	std::cout << "Angle: " << glm::degrees(angle) << " Delta " << deltaTime << std::endl;
+}
+
+
 

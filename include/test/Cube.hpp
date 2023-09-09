@@ -10,6 +10,7 @@
 #include<texture/Texture.hpp>
 #include<vendor/glm/gtc/matrix_transform.hpp>
 #include<Camera.hpp>
+#include<Jaw.hpp>
 
 namespace Test {
 	class Cube : public Test {
@@ -31,5 +32,6 @@ namespace Test {
 		float lightPosition[3];
 		glm::vec3 m_LookAt;
 		Camera* camera;
+		Jaw jaw;
 	};
 }

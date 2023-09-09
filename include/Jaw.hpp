@@ -9,4 +9,9 @@ class Jaw : public Object {
 public:
 	Jaw();
 	virtual ~Jaw();
+	static const float MAX_ANGLE_RAD;
+	static const float MIN_ANGLE_RAD;
+	virtual void OnUpdate(float deltaTime) override;
+private:
+	
 };

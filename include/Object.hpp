@@ -4,8 +4,9 @@
 #include<vendor/glm/glm.hpp>
 #include<vendor/glm/ext/matrix_common.hpp>
 #include<vendor/glm/gtc/matrix_transform.hpp>
-
+#include<GL/glew.h>
 #include <iostream>
+#include<Transform.hpp>
 using std::vector;
 
 class Object {
@@ -13,28 +14,37 @@ public:
 	Object();
 	virtual ~Object();
 	void AddMesh(Mesh mesh);
-	int GetCount();
+	unsigned int GetCount();
 	inline int GetIndexCount() { return indexCount; }
-	inline int GetSize() { return GetCount() * sizeof(float); }
-	virtual void GenerateIndices();
-//	virtual void RotateX(float angleRad);
-//	virtual void RotateY(float angleRad);
-//	virtual void RotateZ(float angleRad);
-	virtual void Translate(glm::vec3 translation);
-	virtual void RTranslate(glm::vec3 rTranslation);
-	virtual glm::mat4 GetModelMatrix();
-	inline glm::mat3 GetTransposeInverseMatrix() { return transpose_inverse_matrix; }
+	inline unsigned int GetByteSize() { return GetCount() * sizeof(float); }
+	virtual unsigned int* GetIndices() { return indices; }
+	virtual unsigned int* GetIndices(unsigned int offset);
+	float* GetData();
+	inline vector<Mesh>& GetMeshes() { return mesh; }
+	virtual void OnUpdate(float deltaTime);
+	virtual void OnStart();
+	inline void SetBuffer(unsigned int vb) { Object::vb = vb; }
+	inline unsigned int GetBuffer() { return vb; }
+	inline void SetSceneAddress(unsigned int address) { sceneAddress = address; }
+	inline void setIndexAddress(unsigned int index) { indexAddress = index; }
+	inline void SetPosition(vec3 position) { transform.SetPosition(position); }
+	inline void SetRotation(vec3 rotation) { transform.SetRotation(rotation); }
+	inline void SetScale(vec3 scale) { transform.SetScale(scale); }
+	inline const vec3& GetPosition() const { return transform.GetPosition(); }
+	inline unsigned int GetSceneAddress() { return sceneAddress; }
+	void TransformObject(glm::mat4 matrix);
+
 
 private:
-	vector<Mesh> mesh;
 	unsigned int* indices;
 	int indexCount;
-	glm::mat4 model_matrix = glm::mat4(1.0f);
-	glm::mat3 transpose_inverse_matrix = glm::mat3(1.0f);
+	unsigned int sceneAddress;
+
 protected:
-	bool state_changed = false;
-	glm::vec3 translation = glm::vec3(0.0f);
-//	glm::vec3 scale;
-//	glm::vec3 rotation;
+	vector<Mesh> mesh;
+	unsigned int vb;
+	unsigned int indexAddress;
+	Transform transform;
+	virtual void GenerateIndices();
 
 };

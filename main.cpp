@@ -12,8 +12,9 @@
 #include<test/ClearColor.hpp>
 #include<test/TestMenu.hpp>
 #include<test/Texture2D.hpp>
+#include<test/Scenery.hpp>
 #include<test/Cube.hpp>
-#include<test/Jaw.hpp>
+#include<Jaw.hpp>
 #include<Camera.hpp>
 
 // #include <vendor/imgui/backends/imgui_impl_opengl3.h>
@@ -146,6 +147,7 @@ int main(void)
 
     Test::TestMenu* testMenu = new Test::TestMenu();
     testMenu->AddTest<Test::ClearColor>("Clear Color");
+    testMenu->AddTest<Test::Scenery>("Scenery");
     testMenu->AddTest<Test::Texture2D>("Texture");
     testMenu->AddTest<Test::Cube>("Cube");
 //    testMenu->AddTest<Test::Jaw>("Jaw");

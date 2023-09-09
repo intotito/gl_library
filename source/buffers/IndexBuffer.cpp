@@ -1,6 +1,6 @@
 #include<buffers/IndexBuffer.hpp>
 
-IndexBuffer::IndexBuffer(): count(0)
+IndexBuffer::IndexBuffer(): count(0), m_ID(0)
 {
 	glGenBuffers(1, &m_ID);
 }
@@ -25,12 +25,15 @@ void IndexBuffer::Unbind() const
 
 void IndexBuffer::SetData(const void* data, const GLuint count)
 {
-	IndexBuffer::count = count;
+	if (data != nullptr) {
+		IndexBuffer::count = count;
+	}
 	Bind();
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint) * count, data, GL_STATIC_DRAW);
 }
 
 IndexBuffer::~IndexBuffer()
 {
+	Unbind();
 	glDeleteBuffers(1, &m_ID);
 }

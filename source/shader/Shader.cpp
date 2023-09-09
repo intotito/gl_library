@@ -28,12 +28,15 @@ Shader::Shader(std::string& filePath)
         free(msg);
         glDeleteProgram(m_ID);
     }
+    glDeleteShader(vShader);
+    glDeleteShader(fShader);
 }
 
 
 Shader::~Shader()
 {
     Unbind();
+    glDeleteProgram(m_ID);
 }
 
 void Shader::Bind() 

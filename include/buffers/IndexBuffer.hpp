@@ -13,4 +13,5 @@ public:
 	void Unbind() const;
 	void SetData(const void* data, const GLuint count);
 	inline GLuint GetCount() { return count; }
+	inline void SetCount(GLuint count) { IndexBuffer::count = count; }
 };

@@ -12,7 +12,7 @@ bool CheckError(const char* file, const char* function, int line) {
     return true;
 }
 
-Renderer::Renderer()
+Renderer::Renderer()// : current_scene(nullptr)
 {
 
 }
@@ -22,6 +22,15 @@ Renderer::~Renderer()
 
 }
 
+/*
+void Renderer::AddScene(Scene* scene) {
+    scenes.push_back(scene);
+    if (current_scene == nullptr)
+    {
+        current_scene = scene;
+    }
+}
+*/
 void Renderer::Clear()
 {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
