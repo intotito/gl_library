@@ -152,6 +152,8 @@
     <ClCompile Include="source\buffers\IndexBuffer.cpp" />
     <ClCompile Include="source\buffers\VertexBuffer.cpp" />
     <ClCompile Include="source\Cubex.cpp" />
+    <ClCompile Include="source\Cylinder.cpp" />
+    <ClCompile Include="source\HollowCube.cpp" />
     <ClCompile Include="source\Light.cpp" />
     <ClCompile Include="source\Mesh.cpp" />
     <ClCompile Include="source\Object.cpp" />
@@ -179,6 +181,8 @@
     <ClInclude Include="include\buffers\VertexBuffer.hpp" />
     <ClInclude Include="include\Camera.hpp" />
     <ClInclude Include="include\Cubex.hpp" />
+    <ClInclude Include="include\Cylinder.hpp" />
+    <ClInclude Include="include\HollowCube.hpp" />
     <ClInclude Include="include\Light.hpp" />
     <ClInclude Include="include\Mesh.hpp" />
     <ClInclude Include="include\Object.hpp" />

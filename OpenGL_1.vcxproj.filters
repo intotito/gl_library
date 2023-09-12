@@ -120,6 +120,12 @@
     <ClCompile Include="source\Plane.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\Cylinder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\HollowCube.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GLWindow.hpp">
@@ -1071,6 +1077,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Plane.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Cylinder.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\HollowCube.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

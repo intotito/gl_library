@@ -11,6 +11,8 @@ C:\Users\intot\OpenGL_1\OpenGL_1\main.cpp;C:\Users\intot\OpenGL_1\OpenGL_1\x64\D
 C:\Users\intot\OpenGL_1\OpenGL_1\source\buffers\IndexBuffer.cpp;C:\Users\intot\OpenGL_1\OpenGL_1\x64\Debug\IndexBuffer.obj
 C:\Users\intot\OpenGL_1\OpenGL_1\source\buffers\VertexBuffer.cpp;C:\Users\intot\OpenGL_1\OpenGL_1\x64\Debug\VertexBuffer.obj
 C:\Users\intot\OpenGL_1\OpenGL_1\source\Cubex.cpp;C:\Users\intot\OpenGL_1\OpenGL_1\x64\Debug\Cubex.obj
+C:\Users\intot\OpenGL_1\OpenGL_1\source\Cylinder.cpp;C:\Users\intot\OpenGL_1\OpenGL_1\x64\Debug\Cylinder.obj
+C:\Users\intot\OpenGL_1\OpenGL_1\source\HollowCube.cpp;C:\Users\intot\OpenGL_1\OpenGL_1\x64\Debug\HollowCube.obj
 C:\Users\intot\OpenGL_1\OpenGL_1\source\Light.cpp;C:\Users\intot\OpenGL_1\OpenGL_1\x64\Debug\Light.obj
 C:\Users\intot\OpenGL_1\OpenGL_1\source\Mesh.cpp;C:\Users\intot\OpenGL_1\OpenGL_1\x64\Debug\Mesh.obj
 C:\Users\intot\OpenGL_1\OpenGL_1\source\Object.cpp;C:\Users\intot\OpenGL_1\OpenGL_1\x64\Debug\Object.obj

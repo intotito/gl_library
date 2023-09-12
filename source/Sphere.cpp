@@ -19,7 +19,7 @@ Sphere::~Sphere()
 
 void Sphere::GenerateMesh()
 {
-	int n_Vertices = (stacks + 1) * segments;
+//	int n_Vertices = (stacks + 1) * segments;
 	int n_Faces = stacks * segments;
 	int s_Vertices =  n_Faces * 4;
 	std::vector<glm::vec3> pos;

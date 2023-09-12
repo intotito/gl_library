@@ -6,32 +6,29 @@
 #include<Jaw.hpp>
 #include<Sphere.hpp>
 #include<Plane.hpp>
+#include<Cylinder.hpp>
+#include<HollowCube.hpp>
 
 namespace Test {
 
 	Scenery::Scenery(std::string testName) : Test(testName), scene(nullptr){
-		Sphere* sphere = new Sphere(12, 24);
-		sphere->SetPosition(glm::vec3(-2.0f, 5.0f, 1.0f));
-		
-		scene = new Scene();
-		Cubex* cube = new Cubex();
-		Cubex* cube1 = new Cubex();
-		cube1->SetPosition(vec3(0.0f, 2.5f, -6.0f));
-	//	cube1->SetRotation(vec3(0.0f, glm::radians(45.0f), 0.0f));
-		cube1->SetScale(vec3(10.0f, 5.0f, 0.1f));
+		HollowCube* hc = new HollowCube();
 
-		cube->SetScale(vec3(10.0f, 0.1f, 12.0f));
-//		cube->SetRotation(vec3(0.0f, glm::radians(45.0f), 0.0f));
-		cube->SetPosition(vec3(0.0f, 0.0f, 0.0f));
+		Sphere* sphere = new Sphere(8, 16);
+		sphere->SetPosition(vec3(0.0f, 6.0f, 1.5f));
+		Cylinder* cyl = new Cylinder(12);
+		cyl->SetScale(vec3(0.25f, 5.0f, 0.25f));
+		cyl->SetPosition(vec3(0.0f, 2.51f, 0.0f));
+	//	cyl->SetRotation(vec3(glm::radians(60.0f), 0.0f, 0.0f));
 		Plane* plane = new Plane();
-	//	Jaw* jaw = new Jaw();
-		vec3 pos = sphere->GetPosition();
+		plane->SetScale(vec3(10.0f, 10.0f, 1.0f));
+		plane->SetRotation(vec3(-glm::radians(90.0f), 0.0f, 0.0f));
+		scene = new Scene();
+		
+		scene->Add(cyl);
+		scene->Add(plane);
 		scene->Add(sphere);
-		scene->Add(cube);
-		scene->Add(cube1);
-		scene->GetCamera()->SetLookAt(pos);
-	//	scene->Add(jaw);
-//		scene->AddTexture(unsigned int)
+
 	}
 
 	Scenery::~Scenery() {
