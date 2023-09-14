@@ -83,7 +83,7 @@ void Scene::SetCamera(Camera* camera)
 
 void Scene::LoadUniforms(float deltaTime)
 {
-	glm::mat4 model_matrix = glm::rotate(glm::mat4(1.0f), deltaTime / 5.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+	glm::mat4 model_matrix = glm::rotate(glm::mat4(1.0f), deltaTime * 1/ 5.0f, glm::vec3(0.65f, 0.24f, 0.16f));
 	glm::mat4 view_matrix = default_camera->GetMatrix();
 	glm::mat4 mvp = GetProjectionMatrix() * view_matrix * model_matrix;
 	default_shader->SetUniformMat4f("u_MVP", mvp);

@@ -1,5 +1,8 @@
-﻿  HollowCube.cpp
+﻿  Scenery.cpp
+C:\Users\intot\OpenGL_1\OpenGL_1\include\test\Test.hpp(13,21): warning C4227: anachronism used: qualifiers on reference are ignored
 C:\Users\intot\OpenGL_1\OpenGL_1\include\Mesh.hpp(29,61): warning C4267: 'return': conversion from 'size_t' to 'unsigned int', possible loss of data
 C:\Users\intot\OpenGL_1\OpenGL_1\include\Mesh.hpp(30,61): warning C4267: 'return': conversion from 'size_t' to 'unsigned int', possible loss of data
-C:\Users\intot\OpenGL_1\OpenGL_1\source\HollowCube.cpp(60,16): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\intot\OpenGL_1\OpenGL_1\source\test\Scenery.cpp(45,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\intot\OpenGL_1\OpenGL_1\source\test\Scenery.cpp(46,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\intot\OpenGL_1\OpenGL_1\source\test\Scenery.cpp(47,22): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
   OpenGL_1.vcxproj -> C:\Users\intot\OpenGL_1\x64\Debug\OpenGL_1.exe
