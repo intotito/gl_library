@@ -1,8 +1,13 @@
 #include<HollowCube.hpp>
 
-HollowCube::HollowCube() : segments(6)
+HollowCube::HollowCube() : HollowCube(16, 0.375f)
 {
-	std::cout << "Hollow Cube Constructor called" << std::endl;
+}
+
+HollowCube::HollowCube(int segments, float radius)
+{
+	HollowCube::segments = segments;
+	HollowCube::radius = radius;
 	GenerateMesh();
 }
 
@@ -13,11 +18,9 @@ HollowCube::~HollowCube()
 
 void HollowCube::GenerateMesh()
 {
-	segments = 24;
 	float h = 0.5f;
 	float w = 0.5f;
 	float z = 0.5f;
-	float r = 0.375f;
 	float phi = (360.0f / segments);
 	float ratio_sum = (90.0f / phi);
 	float ratios[2] = { glm::ceil( glm::ceil(ratio_sum) / 2.0f), ratio_sum - glm::ceil(glm::ceil(ratio_sum) / 2.0f) };
@@ -107,9 +110,9 @@ void HollowCube::GenerateMesh()
 		for (int j = 0; j < segments; j++)
 		{
 			float theta = j * phi;
-			x = r * glm::cos(glm::radians(theta));
-			y = r * glm::sin(glm::radians(theta));
-			vec3 holePos = vec3(x, y, z + Tz);// glm::rotate(mat4(1.0f), glm::radians(Tz), vec3(1.0f, 0.0f, 0.0f))* vec4(x, y, z, 1.0f);
+			x = radius * glm::cos(glm::radians(theta));
+			y = radius * glm::sin(glm::radians(theta));
+			vec3 holePos = vec3(x, y, z + Tz);
 			vec3 posi = pos[j] + vec3(0.0f, 0.0f, Tz);
 			vec3 nor = glm::rotate(mat4(1.0f), glm::radians(i % 2 == 0 ? 0.0f : 180.0f), vec3(0.0f, 0.0f, 1.0f)) * vec4(normal[j], 1.0f);
 			vec2 tCod = glm::rotate(mat4(1.0f), glm::radians(i % 2 == 0 ? 0.0f : 180.0f), vec3(0.0f, 0.0f, 1.0f)) * vec4(texCoord[j], 0.0f, 1.0f);
@@ -117,11 +120,9 @@ void HollowCube::GenerateMesh()
 			position[((2 * i + 0) * segments) + j] = holePos;
 			position[((2 * i + 1) * segments) + j] = posi;
 			
-			std::cout << "Trial: --- " << ((2 * i + 0) * segments) + j << " )( " << ((2 * i + 1) * segments) + j << std::endl;
 			norm[((2 * i + 0) * segments) + j] = nor;
 			norm[((2 * i + 1) * segments) + j] = nor;
 			
-	//		tCoord[(i * segments * 2) + j] = tCod; // wrong 
 			tCoord[((2 * i + 0) * segments) + j] = glm::rotate(mat4(1.0f), glm::radians(i % 2 == 0 ? 0.0f : 180.0f), vec3(0.0f, 0.0f, 1.0f)) * vec4(kx * (w + x), ky * (h + y), 0.0f, 1.0f);
 			tCoord[((2 * i + 1) * segments) + j] = tCod;
 
@@ -149,7 +150,7 @@ void HollowCube::GenerateMesh()
 	int pointer = 0;
 	for (int i = 0; i < 4; i++)
 	{
-		t = (i + 3) % 3 == 0 ? 1 : 2;
+		t = 1.0f;// (i + 3) % 3 == 0 ? 1 : 2;
 		float jara = 0.0f;
 		for (int j = 0; j < segments; j++)
 		{
@@ -162,9 +163,6 @@ void HollowCube::GenerateMesh()
 				std::copy(&(norm[j		+ pattern[i * 4 + k] + jara].x), &(norm[j		+ pattern[i * 4 + k] + jara].x) + 3, data + pointer);	pointer += 3;
 				std::copy(&(tCoord[j	+ pattern[i * 4 + k] + jara].x), &(tCoord[j		+ pattern[i * 4 + k] + jara].x) + 2, data + pointer);	pointer += 2;
 				std::copy(&t,									  &t + 1,									  data + pointer);	pointer++;
-
-				std::cout << "t: " << t << "\ti: " << i << "\tj: " << j << "\tk : " << k << "\tPosition = (" << position[j + pattern[i * 4 + k] + jara].x << ", "
-					<< position[j + pattern[i * 4 + k] + jara].y << ", " << position[j + pattern[i * 4 + k] + jara].z << std::endl;
 			}
 			std::cout << std::endl;
 		}

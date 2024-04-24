@@ -48,7 +48,7 @@ void Cubex::GenerateMesh()
 			glm::vec3 _A = glm::rotate(glm::mat4(1.0f), i * angle, vec3(0.0f, 1.0f, 0.0f)) * vec4(A[j], 1.0f);
 			glm::vec3 _N = glm::rotate(glm::mat4(1.0f), i * angle, vec3(0.0f, 1.0f, 0.0f)) * vec4(N, 1.0f);
 			glm::vec2 _T = T[j];
-			float t = 3.0f;
+			float t = 2.0f;
 		//	std::cout << "_A: (" << _A.x << ", " << _A.y << ", " << _A.z << ")" << " \t- _N: (" << _N.x << ", " << _N.y << ", " << _N.z << ")" << std::endl;
 			std::copy(&(_A.x), &(_A.x) + 3, dataSet + index);
 			index += 3;
@@ -65,7 +65,7 @@ void Cubex::GenerateMesh()
 			glm::vec3 _B = glm::rotate(glm::mat4(1.0f), (k * 2 + 1) * angle, vec3(1.0f, 0.0f, 0.0f)) * vec4(A[l], 1.0f);
 			glm::vec3 _N = glm::rotate(glm::mat4(1.0f), (k * 2 + 1) * angle, vec3(1.0f, 0.0f, 0.0f)) * vec4(N, 1.0f);
 			glm::vec2 _T = T[l];
-			float t = 3.0f;
+			float t = 1.0f;
 	//		std::cout << "_B: (" << _B.x << ", " << _B.y << ", " << _B.z << ")" << " \t- _N: (" << _N.x << ", " << _N.y << ", " << _N.z << ")" << std::endl;
 			std::copy(&(_B.x), &(_B.x) + 3, dataSet + index);
 			index += 3;

@@ -81,13 +81,26 @@ void Scene::SetCamera(Camera* camera)
 	default_camera = camera;
 }
 
-void Scene::LoadUniforms(float deltaTime)
+void Scene::LoadDeltaTimeUniform(float deltaTime)
 {
 	glm::mat4 model_matrix = glm::rotate(glm::mat4(1.0f), deltaTime * 1/ 5.0f, glm::vec3(0.65f, 0.24f, 0.16f));
 	glm::mat4 view_matrix = default_camera->GetMatrix();
 	glm::mat4 mvp = GetProjectionMatrix() * view_matrix * model_matrix;
 	default_shader->SetUniformMat4f("u_MVP", mvp);
 }
+
+void Scene::LoadTextures(std::vector<std::string>& tex)
+{
+	default_shader->Bind();
+	std::vector<int> vv;
+	for (int i = 0; i < tex.size(); i++)
+	{
+		GLuint texture = Texture::LoadTexture(tex[i].c_str());
+		vv.push_back(i);
+	}
+	default_shader->SetUniform1iv("u_Texture", vv.size(), (int*)&vv[0]);
+}
+
 
 void Scene::OnStart()
 {

@@ -87,7 +87,7 @@ namespace Test {
 		GLint values[] = { 0, 1 };
 //		texture = new Texture("res/textures/Camo.png");
 //		texture->Bind(0);
-		shader->SetUniform1iv("u_Texture", values, 2);
+		shader->SetUniform1iv("u_Texture", 2, values);
 	}
 
 	Texture2D::~Texture2D() {

@@ -48,7 +48,7 @@ void Shader::Unbind() {
     glUseProgram(0);
 }
 
-void Shader::SetUniform1iv(const char* name, GLint* values, GLint count)
+void Shader::SetUniform1iv(const char* name, GLint count, GLint* values)
 {
     GLuint location = GetUniformLocation(name);
     if (location == -1) {

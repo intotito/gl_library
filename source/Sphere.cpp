@@ -65,7 +65,7 @@ void Sphere::GenerateMesh()
 			int third = (i + 1) * segments + j + 1 + jara;
 			int fourth = i * segments + j + 1 + jara;
 
-			float texId = ((i % 2 == 0) ^ (j % 2 == 0));
+			float texId = 1.0f;// ((i % 2 == 0) ^ (j % 2 == 0));
 
 			glm::vec2 uv_first = glm::vec2(left, top);
 			glm::vec2 uv_second = glm::vec2(left, bottom);

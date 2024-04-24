@@ -60,12 +60,12 @@ void Cylinder::GenerateMesh()
 			int second = (i + 1) * segments + j + 1 + jara;
 			int first = i * segments + j + 1 + jara;
 
-			float texId =  ((i % 2 == 0) ^ (j % 2 == 0));
+			float texId = 0.0f;// ((i % 2 == 0) ^ (j % 2 == 0));
 
-			glm::vec2 uv_first = glm::vec2(left, top);
-			glm::vec2 uv_second = glm::vec2(left, bottom);
-			glm::vec2 uv_third = glm::vec2(right, bottom);
-			glm::vec2 uv_fourth = glm::vec2(right, top);
+			glm::vec2 uv_fourth = glm::vec2(left, top);
+			glm::vec2 uv_third = glm::vec2(left, bottom);
+			glm::vec2 uv_second = glm::vec2(right, bottom);
+			glm::vec2 uv_first = glm::vec2(right, top);
 
 
 			pointer = 4 * stride * (i * segments + j);

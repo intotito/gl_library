@@ -7,6 +7,7 @@
 #include<GL/glew.h>
 #include <iostream>
 #include<Transform.hpp>
+#include<texture/Texture.hpp>
 using std::vector;
 
 class Object {

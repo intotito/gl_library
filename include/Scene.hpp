@@ -26,10 +26,10 @@ public:
 	inline VertexArray* GetVertexArray() { return vertexArray; }
 	inline IndexBuffer* GetIndexBuffer() { return indexBuffer; }
 	inline Shader* GetShader() { return default_shader; }
-	void LoadUniforms(float deltaTime);
+	void LoadDeltaTimeUniform(float deltaTime);
 	void OnUpdate(float deltaTime);
 	void OnStart();
-	void AddTexture(unsigned int);
+	void LoadTextures(std::vector<std::string>& tex);
 
 private: 
 	std::vector<Object*> objects;
