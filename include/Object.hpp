@@ -10,6 +10,9 @@
 #include<texture/Texture.hpp>
 using std::vector;
 
+
+/// The base Object class where every Geometry inherits from.
+
 class Object {
 public:
 	Object();

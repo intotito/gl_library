@@ -18,7 +18,6 @@ void Object::AddMesh(Mesh mesh)
 float* Object::GetData()
 {
 	return mesh[0].Data();
-
 }
 
 unsigned int Object::GetCount()
@@ -43,7 +42,8 @@ unsigned int* Object::GetIndices(unsigned int offset)
 	unsigned int* ind = (unsigned int*)malloc(sizeof(unsigned int) * indexCount);
 	for (int i = 0; i < indexCount; i++)
 	{
-		*(ind + i) = offset + *(indices + i);	}
+		*(ind + i) = offset + *(indices + i);	// I know what I am doing
+	}
 	return ind;
 }
 
