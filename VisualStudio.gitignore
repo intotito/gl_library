@@ -95,6 +95,8 @@ StyleCopReport.xml
 *.vssscc
 .builds
 *.pidb
+*.idb
+*.pdb
 *.svclog
 *.scc
 
