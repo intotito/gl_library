@@ -60,15 +60,26 @@ void Scene::Add(Object* object)
 	object->SetBuffer(vertexBuffer->GetID());
 	vertexBuffer->Unbind();
 	indexBuffer->Bind();
-	unsigned int* indices = object->GetIndices(indexOffset);
+	// unsigned int* indices = object->GetIndices(indexOffset);
+	unsigned int* indices = AppendIndices(object->GetIndices(), object->GetIndexCount());
 	glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, indexOffset, object->GetIndexCount() * sizeof(unsigned int), indices);
 	indexOffset += object->GetIndexCount() * sizeof(unsigned int);
-	free(indices);
+	//free(indices);
+	delete indices;
 	indexBuffer->SetCount(indexBuffer->GetCount() + object->GetIndexCount());
 	indexBuffer->Unbind();
 	objects.push_back(object);
 
 	std::cout << "Index Offset: " << indexOffset << std::endl;
+}
+
+unsigned int* Scene::AppendIndices(const unsigned int* indices, int size) const
+{
+	unsigned int* indx = new unsigned int[size];
+	for (int i = 0; i < size; i++) {
+		indx[i] = indexOffset + *(indices + i);
+	}
+	return indx;
 }
 
 void Scene::SetCamera(Camera* camera)

@@ -32,6 +32,7 @@ public:
 	void LoadTextures(std::vector<std::string>& tex);
 
 private: 
+	unsigned int* AppendIndices(const unsigned int* indices, int size) const;
 	std::vector<Object*> objects;
 	std::vector<Light*> lights;
 	VertexArray* vertexArray;
