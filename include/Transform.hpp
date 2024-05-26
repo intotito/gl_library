@@ -1,4 +1,6 @@
-#pragma once
+#ifndef ZFT_TRANSFORM
+#define ZFT_TRANSFORM
+
 #include<vendor/glm/glm.hpp>
 #include<vendor/glm/ext/matrix_common.hpp>
 using glm::vec4;
@@ -206,6 +208,14 @@ public:
 	* This method has no effect if neither of the matrices has changed since 
 	* the last call.
 	*/
+
+	/**
+	* Get the Object that owns this Transform. 
+	* 
+	* Get the Object that this transform represents is transformational state. 
+	* @return the Object that owns this transform. 
+	*/
+	Object* const GetOwner() const;
 	void Update();
 	/**
 	* Get the identity matrix of this Transform. 
@@ -213,7 +223,7 @@ public:
 	* Get the matrix representing the translational, rotational and scaling state of the Transform.
 	* @return the transformational matrix.
 	*/
-	inline mat4& GetMatrix() { return identity; }
+	inline const mat4& GetMatrix() { return identity; }
 
 	static void PrintMatrix(mat4 matrix);
 
@@ -322,3 +332,4 @@ private:
 		*/
 		Object* Container;
 };
+#endif

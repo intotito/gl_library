@@ -1,6 +1,6 @@
 #include <Object.hpp>
 
-Object::Object() :	indices(nullptr), indexCount(0), sceneAddress(0), indexAddress(0), vb(NULL), transform(Transform())
+Object::Object() :	indices(nullptr), indexCount(0), sceneAddress(0), vb(NULL), transform(Transform())//, indexAddress(0)
 {
 	transform.SetContainer(this);
 }
@@ -37,7 +37,7 @@ void Object::TransformObject(glm::mat4 matrix) {
 	}
 }
 
-unsigned int* Object::GetIndices(unsigned int offset)
+unsigned int* Object::GetIndices(unsigned int offset) const
 {
 	unsigned int* ind = (unsigned int*)malloc(sizeof(unsigned int) * indexCount);
 	for (int i = 0; i < indexCount; i++)
@@ -50,7 +50,7 @@ unsigned int* Object::GetIndices(unsigned int offset)
 void Object::GenerateIndices()
 {
 	int vertexPerFace = 4; // quadilateral
-	int trianglePerFace = (vertexPerFace - 3) + 1;
+	int trianglePerFace = (vertexPerFace - 3) + 1; // 2
 	int faces = GetCount() / vertexPerFace;
 	int triangles = faces * trianglePerFace;
 

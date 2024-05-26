@@ -51,6 +51,11 @@ void Transform::SetContainer(Object* object) {
 	Container = object;
 }
 
+Object* const Transform::GetOwner() const
+{
+	return Container;
+}
+
 vec3 const& Transform::GetPosition() const
 {
 	return position;
@@ -68,15 +73,26 @@ vec3 const& Transform::GetRotation() const
 
 void Transform::Update()
 {
-	if (isDirty && Container)
+	if (isDirty)
 	{
 		std::cout << "Is Dirty ------------------------------ " << std::endl;
 		identity = translate * rotation_z * rotation_y * rotation_x * scaling;
-		Container->TransformObject(identity);
-		unsigned int vBuffer = Container->GetBuffer();
-		if (vBuffer) {
-			glBindBuffer(GL_ARRAY_BUFFER, vBuffer);
-			glBufferSubData(GL_ARRAY_BUFFER, Container->GetSceneAddress(), Container->GetByteSize(), Container->GetData());
+		if (Container != nullptr)
+		{
+			Container->TransformObject(identity);
+			unsigned int vBuffer = Container->GetBuffer();
+			if (vBuffer) {
+				auto& meshes = Container->GetMeshes();
+				unsigned int address = Container->GetSceneAddress();
+				for (auto& m : meshes)
+				{
+					glBindBuffer(GL_ARRAY_BUFFER, vBuffer);
+					glBufferSubData(GL_ARRAY_BUFFER, address, m.GetByteSize(), m.Data());
+					glBindBuffer(GL_ARRAY_BUFFER, 0);
+					address += m.GetByteSize();
+				}
+
+			}
 		}
 		isDirty = false;
 	}

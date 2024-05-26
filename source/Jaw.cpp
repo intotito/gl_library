@@ -1,4 +1,6 @@
 #include <Jaw.hpp>
+#include <Mesh.hpp>
+
 
 const float Jaw::MAX_ANGLE_RAD = glm::radians(0.0f);
 const float Jaw::MIN_ANGLE_RAD = glm::radians(-90.0f);
@@ -104,23 +106,49 @@ Jaw::~Jaw()
 
 }
 
+int Jaw::GetIndex(Mesh& mesh)
+{
+	for (int i = 0; i < Jaw::mesh.size(); i++) {
+		if (&Jaw::mesh[i] == &mesh) {
+			return i;
+		}
+	}
+	return -1;
+}
+
+void Jaw::RotateMesh(Mesh& mesh, float angle, Axis axis)
+{
+	int index = GetIndex(mesh);
+	mesh.RotateJoint(angle, axis);
+	float offset = 0;
+	for (int i = index - 1; i >= 0; i--) {
+		offset += Jaw::mesh[i].GetByteSize();
+	}
+	glBindBuffer(GL_ARRAY_BUFFER, vb);
+	glBufferSubData(GL_ARRAY_BUFFER, GetSceneAddress() + offset, mesh.GetByteSize(), mesh.Data());
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
+
 void Jaw::OnUpdate(float deltaTime) 
 {
-	static int sign = -1;
+//	static int sign = -1;
 //	float angle = mesh[1].rotation.x;
-	float angle = glm::radians(deltaTime);
+	float angle = glm::radians(deltaTime * 10);
+	RotateMesh(mesh[1], angle, Y_AXIS);
+	RotateMesh(mesh[0], -angle/2, Y_AXIS);
+//	mesh[1].Format(angle);
+
+//	mesh[1].RotateJoint(angle, X_AXIS);
+//	mesh[0].RotateJoint(angle, Y_AXIS);
+
+//	glBindBuffer(GL_ARRAY_BUFFER, vb);
 	
-	mesh[1].Format(angle);
+//	GLsizeiptr offset = GetSceneAddress() + mesh[0].GetByteSize();
+//	glBufferSubData(GL_ARRAY_BUFFER, offset, mesh[1].GetByteSize(), mesh[1].Data());
 
 
-//	glGenBuffers(1, &m_ID);
-	glBindBuffer(GL_ARRAY_BUFFER, vb);
-	
-	float offset = GetSceneAddress() + mesh[0].GetByteSize();
-	glBufferSubData(GL_ARRAY_BUFFER, offset, mesh[1].GetByteSize(), mesh[1].Data());
-
-
-//	std::cout << "Angle: " << glm::degrees(angle) << " Delta " << deltaTime << std::endl;
+//	std::cout << "offset: " << offset << " Size " << mesh[1].GetByteSize() << std::endl;
+//	Object::OnUpdate(deltaTime);
 }
 
 

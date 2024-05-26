@@ -20,6 +20,7 @@ TEST_F(TransformTest, DefaultConstructorTest) {
 	EXPECT_TRUE(glm::all(glm::equal(transform.GetPosition(), position)));
 	EXPECT_TRUE(glm::all(glm::equal(transform.GetRotation(), rotation)));
 	EXPECT_TRUE(glm::all(glm::equal(transform.GetScale(), scale)));
+	EXPECT_EQ(transform.GetOwner(), nullptr);
 }
 
 TEST_F(TransformTest, TestTranslation) {
@@ -38,5 +39,6 @@ TEST_F(TransformTest, TestTranslation) {
 }
 
 TEST_F(TransformTest, TestUpdate) {
+	transform.Update();
 
 }

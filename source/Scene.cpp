@@ -47,18 +47,27 @@ Scene::~Scene()
 
 void Scene::Add(Object* object)
 {
-	vertexArray->Bind();
-	vertexBuffer->Bind();
 	assert((bufferOffset + object->GetByteSize()) <= GetBufferByteSize(), "Fatal Error! Scene memory limit Exceeded!!");
 	object->SetSceneAddress(bufferOffset);
 	auto& v = object->GetMeshes();
-	for (int i = 0; i < v.size(); i++) {
-		glBufferSubData(GL_ARRAY_BUFFER, bufferOffset, v[i].GetByteSize(), v[i].Data());
-		bufferOffset += v[i].GetByteSize();
-		std::cout << "Buffer Offset: " << bufferOffset << std::endl;
-	}
+	vertexArray->Bind();
+	for (int z = 0; z < v.size(); z++) {
+		std::cout << "Buffer Offset: " << bufferOffset << " Size: " << v[z].GetByteSize() << std::endl;
+		vertexBuffer->Bind();
+		glBufferSubData(GL_ARRAY_BUFFER, bufferOffset, v[z].GetByteSize(), v[z].Data());
+		bufferOffset += v[z].GetByteSize();
+		vertexBuffer->Unbind();
+/*		for (int i = 0; i < v[z].GetByteSize() / sizeof(float) / (sizeof(Vertex) / sizeof(float)); i++)
+		{
+			std::cout << "V[" << i << "] : ";
+			for (int j = 0; j < (sizeof(Vertex) / sizeof(float)); j++)
+			{
+				std::cout << *(((float*)v[z].Data()) + (i * (sizeof(Vertex) / sizeof(float)) + j)) << ", ";
+			}
+			std::cout << std::endl;
+		}
+*/	}
 	object->SetBuffer(vertexBuffer->GetID());
-	vertexBuffer->Unbind();
 	indexBuffer->Bind();
 	// unsigned int* indices = object->GetIndices(indexOffset);
 	unsigned int* indices = AppendIndices(object->GetIndices(), object->GetIndexCount());
@@ -70,7 +79,7 @@ void Scene::Add(Object* object)
 	indexBuffer->Unbind();
 	objects.push_back(object);
 
-	std::cout << "Index Offset: " << indexOffset << std::endl;
+	std::cout << "Index Offset: " << indexOffset << " Scene address " << object->GetSceneAddress() << std::endl;
 }
 
 unsigned int* Scene::AppendIndices(const unsigned int* indices, int size) const
@@ -94,7 +103,8 @@ void Scene::SetCamera(Camera* camera)
 
 void Scene::LoadDeltaTimeUniform(float deltaTime)
 {
-	glm::mat4 model_matrix = glm::rotate(glm::mat4(1.0f), deltaTime * 1/ 5.0f, glm::vec3(0.65f, 0.24f, 0.16f));
+	glm::mat4 model_matrix = glm::rotate(glm::mat4(1.0f), glm::radians(135.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+//	glm::mat4 model_matrix = glm::rotate(glm::mat4(1.0f), deltaTime * 1/ 5.0f, glm::vec3(0.65f, 0.24f, 0.16f));
 	glm::mat4 view_matrix = default_camera->GetMatrix();
 	glm::mat4 mvp = GetProjectionMatrix() * view_matrix * model_matrix;
 	default_shader->SetUniformMat4f("u_MVP", mvp);

@@ -13,5 +13,6 @@ public:
 	static const float MIN_ANGLE_RAD;
 	virtual void OnUpdate(float deltaTime) override;
 private:
-	
+	void RotateMesh(Mesh& mesh, float angle, Axis axis);
+	int GetIndex(Mesh& mesh);
 };
