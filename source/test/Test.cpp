@@ -1,10 +1,5 @@
 #include<test/Test.hpp>
 
-namespace test {
-
-}
-#include<test/Test.hpp>
-
 namespace Test {
 	Test::Test(std::string name)
 	{
@@ -35,4 +30,10 @@ namespace Test {
 	{
 
 	}
+
+	void Test::OnKeyPressed(int keycode)
+	{
+
+	}
+
 }

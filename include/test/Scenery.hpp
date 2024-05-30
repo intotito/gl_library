@@ -11,6 +11,7 @@ namespace Test {
 		void OnRender(Renderer& renderer);
 		void OnImGuiRender();
 		void OnStart() override;
+		void OnKeyPressed(int keycode) override;
 	private:
 		Scene* scene;
 	};

@@ -137,6 +137,7 @@ void Scene::OnUpdate(float deltaTime) {
 	{
 		a->OnUpdate(deltaTime);
 	}
+	default_camera->OnUpdate(deltaTime);
 }
 
 void Scene::AddLight(Light* light)

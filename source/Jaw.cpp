@@ -120,7 +120,7 @@ void Jaw::RotateMesh(Mesh& mesh, float angle, Axis axis)
 {
 	int index = GetIndex(mesh);
 	mesh.RotateJoint(angle, axis);
-	float offset = 0;
+	unsigned int offset = 0;
 	for (int i = index - 1; i >= 0; i--) {
 		offset += Jaw::mesh[i].GetByteSize();
 	}
@@ -133,9 +133,9 @@ void Jaw::OnUpdate(float deltaTime)
 {
 //	static int sign = -1;
 //	float angle = mesh[1].rotation.x;
-	float angle = glm::radians(deltaTime * 10);
-	RotateMesh(mesh[1], angle, Y_AXIS);
-	RotateMesh(mesh[0], -angle/2, Y_AXIS);
+//	float angle = glm::radians(deltaTime * 10);
+//	RotateMesh(mesh[1], angle, X_AXIS);
+//	RotateMesh(mesh[0], -angle/2, Z_AXIS);
 //	mesh[1].Format(angle);
 
 //	mesh[1].RotateJoint(angle, X_AXIS);
@@ -148,7 +148,7 @@ void Jaw::OnUpdate(float deltaTime)
 
 
 //	std::cout << "offset: " << offset << " Size " << mesh[1].GetByteSize() << std::endl;
-//	Object::OnUpdate(deltaTime);
+	Object::OnUpdate(deltaTime);
 }
 
 

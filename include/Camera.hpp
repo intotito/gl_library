@@ -15,6 +15,14 @@ public:
 	inline void SetX(float x) { position.x = x; }
 	inline void SetY(float y) { position.y = y; }
 	inline void SetZ(float z) { position.z = z; }
+	void SetPosition(glm::vec3 position);
+
+	void OnUpdate(float deltaTime);
+	void MoveForward();
+	void MoveBackward();
+	void StrafLeft();
+	void StrafRight();
+
 	inline glm::vec3 GetPosition() { return position; }
 	inline void SetLookAt(glm::vec3& la){
 		Target.x = la.x;
@@ -25,4 +33,6 @@ private:
 	glm::vec3 position;
 	glm::vec3 Up;
 	glm::vec3 Target = glm::vec3(0.0f, 0.0f, 0.0f);
+	float speed;
+	float straf;
 };

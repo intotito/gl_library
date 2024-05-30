@@ -5,7 +5,7 @@ using glm::mat4;
 using glm::cos;
 using glm::sin;
 #include<iostream>
-Camera::Camera(vec3 pos, vec3 v) : position(pos), Up(v)
+Camera::Camera(vec3 pos, vec3 v) : position(pos), Up(v), speed(0.02f), straf(2.0f)
 {
 	vec3 N = glm::normalize(position - Target);
 	vec3 U = glm::normalize(glm::cross(Up , N));
@@ -43,6 +43,46 @@ glm::mat4 Camera::GetMatrix()
 //	return (mat * glm::translate(mat4(1.0f), vec3(-position.x, -position.y, -position.z)));
 		//position.z -= 0.-position-position.y.y0005f;
 	//	return glm::transl-position-position.z.zate(mat4(1.0f), position);// *GetRotationMatrix();
+}
+
+void Camera::SetPosition(glm::vec3 position)
+{
+	Camera::position.x = position.x;
+	Camera::position.y = position.y;
+	Camera::position.z = position.z;
+}
+
+void Camera::MoveForward()
+{
+	SetPosition(position * (1 - speed));
+}
+
+void Camera::MoveBackward()
+{
+	SetPosition(position * (1 + speed));
+}
+
+void Camera::StrafLeft()
+{
+	vec3 N = glm::normalize(position - Target);
+	glm::vec3 left = glm::cross(N, Up);
+	left *= straf;
+	SetPosition(position + left);
+}
+
+void Camera::StrafRight()
+{
+	vec3 N = glm::normalize(position - Target);
+	glm::vec3 right = glm::cross(Up, N);
+	right *= straf;
+
+	std::cout << right.x << "," << right.y << "," << right.z << std::endl;
+	SetPosition(position + right);
+}
+
+void Camera::OnUpdate(float deltaTime)
+{
+
 }
 
 

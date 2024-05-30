@@ -1,14 +1,19 @@
 #include <test/TestMenu.hpp>
 
 namespace Test {
-	TestMenu::TestMenu() : currentTest(nullptr)
+	TestMenu::TestMenu() : currentTest(nullptr), publisher(new event::Publisher())
 	{
 
 	}
 
 	TestMenu::~TestMenu()
 	{
-
+		currentTest = nullptr;
+		for (auto& test : tests)
+		{
+			delete test.second();
+		}
+		tests.clear();
 	}
 
 	void TestMenu::OnRender(Renderer& renderer)
@@ -40,5 +45,12 @@ namespace Test {
 
 		ImGui::End();
 	}
-	
+
+	void TestMenu::OnKeyPressed(int keycode)
+	{
+		if (currentTest)
+		{
+			currentTest->OnKeyPressed(keycode);
+		}
+	}
 }

@@ -15,7 +15,7 @@ namespace Test {
 	Scenery::Scenery(std::string testName) : Test(testName), scene(nullptr){
 		HollowCylinder* hc = new HollowCylinder(24, 0.375f);
 		HollowCube* hcube = new HollowCube();
-		hc->SetScale(vec3(5.0f, 5.0f, 10.0f));
+		hc->SetScale(vec3(5.0f, 5.0f, 2.0f));
 		hcube->SetScale(vec3(5.0f, 5.0f, 1.0f));
 		hcube->SetPosition(vec3(0.0f, -3.0f, 1.0f));
 //		hcube->SetPosition(vec3(0.0f, 0.0f, 5.0f));
@@ -39,7 +39,7 @@ namespace Test {
 	
 		Cubex* cube = new Cubex();
 		cube->SetScale(vec3(5.0f));
-		//scene->Add(cube);
+		scene->Add(hc);
 
 	}
 
@@ -74,4 +74,28 @@ namespace Test {
 		scene->OnStart();
 		std::cout << "Scenery OnStart Called()" << std::endl;
 	}
+
+	void Scenery::OnKeyPressed(int keycode)
+	{
+		if (keycode == GLFW_KEY_UP)
+		{
+			Camera* camera = scene->GetCamera();
+			camera->MoveForward();
+		} else if (keycode == GLFW_KEY_DOWN)
+		{
+			Camera* camera = scene->GetCamera();
+			camera->MoveBackward();
+		}
+		else if (keycode == GLFW_KEY_LEFT)
+		{
+			Camera* camera = scene->GetCamera();
+			camera->StrafLeft();
+		}
+		else if (keycode == GLFW_KEY_RIGHT)
+		{
+			Camera* camera = scene->GetCamera();
+			camera->StrafRight();
+		}
+	}
+
 }
