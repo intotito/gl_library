@@ -77,6 +77,7 @@ namespace Test {
 
 	void Scenery::OnKeyPressed(int keycode)
 	{
+		std::cout << "Okidokiokokokooikokojfisjdifojoasld;j" << std::endl;
 		if (keycode == GLFW_KEY_UP)
 		{
 			Camera* camera = scene->GetCamera();

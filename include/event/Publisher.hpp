@@ -1,9 +1,10 @@
 #pragma once
-#include<event/Event.hpp>
 #include <map>
 #include <vector>
 #include <string>
 #include <iostream>
+#include <event/Event.hpp>
+
 namespace event {
 	class Publisher
 	{
@@ -11,12 +12,12 @@ namespace event {
 		Publisher();
 		~Publisher();
 		void Subscribe(Event* event);
-		void Unsubscribe(Event* event);
-		void Notify(std::string type);
+		void Unsubscribe(EventType type, Test::Test* subscriber);
+		void Notify(EventType type, int keyCode);
 		void NotifyAll();
 
 	private:
-		std::map<std::string, std::vector<Event*>> events;
+		std::map<int, std::vector<Event*>> events;
 	};
 
 }

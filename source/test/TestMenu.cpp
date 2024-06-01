@@ -35,6 +35,8 @@ namespace Test {
 		}
 		else {
 			if (ImGui::Button("<-")) {
+				// publisher->Unsubscribe();
+				currentTest->RemoveKeyListenerEvent(publisher);
 				delete currentTest;
 				currentTest = nullptr;
 			}
@@ -48,9 +50,12 @@ namespace Test {
 
 	void TestMenu::OnKeyPressed(int keycode)
 	{
+		
 		if (currentTest)
 		{
-			currentTest->OnKeyPressed(keycode);
+		//	currentTest->OnKeyPressed(keycode);
+			publisher->Notify(event::KEY_PRESSED_EVENT, keycode);
+			std::cout << "Weting Happen" << std::endl;
 		}
 	}
 }
