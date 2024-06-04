@@ -9,8 +9,12 @@ namespace Test {
 	public:
 		TestMenu();
 		~TestMenu();
-		void OnRender(Renderer& renderer);
-		virtual void OnKeyPressed(int keycode);
+		void OnRender(Renderer& renderer, float deltaTime);
+		void UpdateEvent(float time);
+		virtual void FireKeyPressedEvent(int keycode);
+		virtual void RegisterKeyEvent(int keycode);
+		virtual void UnRegisterKeyEvent(int keycode);
+//		virtual void ConsumeEvent(EventType type);
 
 		template <typename T>
 		void AddTest(std::string testName)

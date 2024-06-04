@@ -16,7 +16,7 @@ namespace Test {
 		Texture2D(std::string name);
 		~Texture2D();
 		void OnUpdate(float deltaTime) override;
-		void OnRender(Renderer& renderer) override;
+		void OnRender(Renderer& renderer, float deltaTime) override;
 		void OnImGuiRender() override;
 	private:
 		VertexArray* va;

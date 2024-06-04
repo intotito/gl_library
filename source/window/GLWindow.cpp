@@ -1,7 +1,7 @@
 #include <window/GLWindow.hpp>
 
 GLWindow::GLWindow(std::string title, int width, int height) : initialized(false), window(nullptr), title(title), 
-renderer(new Renderer())
+renderer(new Renderer()), lastTime(0)
 {
 	Initialize(width, height);
 }
@@ -91,9 +91,14 @@ void GLWindow::Show()
 {
     assert(initialized, "GLFW Not initialized, exiting ....");
     OnStart();
+    lastTime = glfwGetTime() * 1000.0;
+    double deltaTime = 0.0;
+    int target_frame = 60;
     while (!glfwWindowShouldClose(window))
     {
-
+        double currentTime = glfwGetTime() * 1000.0;
+        deltaTime = currentTime - lastTime;
+        lastTime = currentTime;
         /* Poll for and process events */
         glfwPollEvents();
 
@@ -103,13 +108,16 @@ void GLWindow::Show()
         ImGui_ImplOpenGL3_NewFrame();
         ImGui::NewFrame();
 
-        menu->OnRender(*renderer);
+        menu->OnRender(*renderer, deltaTime);
 
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
            /* Swap front and back buffers */
         glfwSwapBuffers(window);
+
+        /* Update Event System*/
+        menu->UpdateEvent(currentTime);
     }
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
@@ -120,7 +128,13 @@ void GLWindow::Show()
 void GLWindow::OnKeyPressed(GLFWwindow* window, int key, int scancode, int action, int mods) {
     if (action == GLFW_PRESS)
     {
-        menu->OnKeyPressed(key);
+ //       menu->FireKeyPressedEvent(key);
+        menu->RegisterKeyEvent(key);
+    } 
+    else if (action == GLFW_RELEASE)
+    {
+        menu->UnRegisterKeyEvent(key);
+        std::cout << "I Just released it" << std::endl;
     }
 }
 

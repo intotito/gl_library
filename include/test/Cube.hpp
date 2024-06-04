@@ -18,7 +18,7 @@ namespace Test {
 		Cube(std::string name);
 		~Cube();
 		void OnUpdate(float deltaTime) override;
-		void OnRender(Renderer& renderer) override;
+		void OnRender(Renderer& renderer, float deltaTime) override;
 		void OnImGuiRender() override;
 	private:
 		VertexArray* va;

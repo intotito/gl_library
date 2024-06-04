@@ -1,7 +1,7 @@
 #include<test/Test.hpp>
 
 namespace Test {
-	Test::Test(std::string name)
+	Test::Test(std::string name): lastTime(0)
 	{
 		Test::name = name;
 	}
@@ -16,7 +16,7 @@ namespace Test {
 
 	}
 
-	void Test::OnRender(Renderer& renderer)
+	void Test::OnRender(Renderer& renderer, float deltaTime)
 	{
 
 	}
@@ -31,9 +31,22 @@ namespace Test {
 
 	}
 
-	void Test::OnKeyPressed(int keycode)
+	void Test::OnKeyPressed(event::Event* event)
 	{
 
 	}
-
+	void Test::AddKeyListenerEvent(event::Publisher* publisher) {
+		event::KeyPressedEvent* event = new event::KeyPressedEvent();
+		std::function<void()> action = [=]() -> void {
+			OnKeyPressed(event);
+			std::cout << "Did we" << std::endl;
+			};
+		event->SetSource(this);
+		event->SetAction(action);
+//		event->SetState(event::STATE_CREATED);
+		publisher->Subscribe(event);
+	}
+	void Test::RemoveKeyListenerEvent(event::Publisher* publisher) {
+		publisher->Unsubscribe(event::KEY_PRESSED_EVENT, this);
+	}
 }

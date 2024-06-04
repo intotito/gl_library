@@ -6,6 +6,7 @@ namespace event {
 
 	public:
 		KeyPressedEvent();
+		KeyPressedEvent(int keyCode);
 		~KeyPressedEvent();
 		EventType GetType() override;
 	};

@@ -8,10 +8,10 @@ namespace Test {
 		Scenery(std::string testName);
 		~Scenery();
 		void OnUpdate(float deltaTime);
-		void OnRender(Renderer& renderer);
+		void OnRender(Renderer& renderer, float deltaTime);
 		void OnImGuiRender();
 		void OnStart() override;
-		void OnKeyPressed(int keycode) override;
+		void OnKeyPressed(event::Event* event) override;
 	private:
 		Scene* scene;
 	};

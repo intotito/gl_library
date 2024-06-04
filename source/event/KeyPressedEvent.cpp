@@ -5,6 +5,11 @@ namespace event {
 
 	}
 
+	KeyPressedEvent::KeyPressedEvent(int keyCode) : Event()
+	{
+		SetKeyCode(keyCode);
+	}
+
 	KeyPressedEvent::~KeyPressedEvent()
 	{
 

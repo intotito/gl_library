@@ -7,7 +7,7 @@ namespace Test {
 		ClearColor(std::string name);
 		~ClearColor();
 		void OnUpdate(float deltaTime) override;
-		void OnRender(Renderer& renderer) override;
+		void OnRender(Renderer& renderer, float deltaTime) override;
 		void OnImGuiRender() override;
 
 	private:

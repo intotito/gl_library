@@ -28,5 +28,6 @@ private:
 	Renderer* renderer;
 	std::string title;
 	Test::TestMenu* menu;
+	double lastTime;
 };
 

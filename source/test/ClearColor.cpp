@@ -14,10 +14,10 @@ namespace Test {
 
 	void ClearColor::OnUpdate(float deltaTime)
 	{
-
+		Test::OnUpdate(deltaTime);
 	}
 
-	void ClearColor::OnRender(Renderer& renderer)
+	void ClearColor::OnRender(Renderer& renderer, float deltaTime)
 	{
 		glClearColor(color[0], color[1], color[2], color[3]);
 		glClear(GL_COLOR_BUFFER_BIT);

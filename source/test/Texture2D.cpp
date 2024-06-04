@@ -99,9 +99,11 @@ namespace Test {
 	}
 	void Texture2D::OnUpdate(float deltaTime)
 	{
+		Test::OnUpdate(deltaTime);
 	}
-	void Texture2D::OnRender(Renderer& renderer)
+	void Texture2D::OnRender(Renderer& renderer, float deltaTime)
 	{
+		Test::OnRender(renderer, deltaTime);
 		view_matrix = glm::translate(glm::mat4(1.0f), glm::vec3(translate[0], translate[1], translate[2]));
 		glm::mat4 mvp = proj_matrix * view_matrix;
 		shader->SetUniformMat4f("u_MVP", mvp);

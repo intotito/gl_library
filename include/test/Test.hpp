@@ -10,27 +10,16 @@ namespace Test {
 	public:
 		Test(std::string name);
 		virtual ~Test();
-		virtual void OnKeyPressed(int keycode);
+		virtual void OnKeyPressed(event::Event* event);
 		virtual void OnUpdate(float deltaTime);
-		virtual void OnRender(Renderer& renderer);
+		virtual void OnRender(Renderer& renderer, float deltaTime);
 		virtual void OnImGuiRender();
 		virtual void OnStart();
-		//	template<typename T>
-		void AddKeyListenerEvent(event::Publisher* publisher) {
-			event::KeyPressedEvent* event = new event::KeyPressedEvent();
-			std::function<void()> action = [=]() -> void {
-				OnKeyPressed(event->GetKeyCode());
-				std::cout << "Did we" << std::endl;
-				};
-			event->SetOwner(this);
-			event->SetAction(action);
-			publisher->Subscribe(event);
-		}
-		void RemoveKeyListenerEvent(event::Publisher* publisher) {
-			publisher->Unsubscribe(event::KEY_PRESSED_EVENT, this);
-		}
+		void AddKeyListenerEvent(event::Publisher* publisher);
+		void RemoveKeyListenerEvent(event::Publisher* publisher);
 		inline std::string& const GetName() { return name; } 
 	private:
 		std::string name;
+		double lastTime;
 	};
 }

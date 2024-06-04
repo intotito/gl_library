@@ -125,9 +125,11 @@ namespace Test {
 	}
 	void Cube::OnUpdate(float deltaTime)
 	{
+		Test::OnUpdate(deltaTime);
 	}
-	void Cube::OnRender(Renderer& renderer)
+	void Cube::OnRender(Renderer& renderer, float deltaTime)
 	{
+		Test::OnRender(renderer, deltaTime);
 	//	float angle = (float)glfwGetTime() / 5.0f;
 
 		static float timer = glfwGetTime();

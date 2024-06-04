@@ -16,11 +16,12 @@ namespace Test {
 		tests.clear();
 	}
 
-	void TestMenu::OnRender(Renderer& renderer)
+	void TestMenu::OnRender(Renderer& renderer, float deltaTime)
 	{
 		renderer.Clear();
 		if (currentTest != nullptr) {
-			currentTest->OnRender(renderer);
+			currentTest->OnRender(renderer, deltaTime);
+			UpdateEvent(deltaTime);
 		}
 		ImGui::Begin((currentTest == nullptr) ? "Test Menu" : currentTest->GetName().c_str());
 
@@ -48,7 +49,29 @@ namespace Test {
 		ImGui::End();
 	}
 
-	void TestMenu::OnKeyPressed(int keycode)
+	void TestMenu::UpdateEvent(float time)
+	{
+		// search for all registered events
+		publisher->Update(time);
+	}
+
+	void TestMenu::RegisterKeyEvent(int keycode)
+	{
+		if (currentTest)
+		{
+			publisher->ActivateKey(keycode);
+		}
+	}
+
+	void TestMenu::UnRegisterKeyEvent(int keycode)
+	{
+		if (currentTest)
+		{
+			publisher->DeactivateKey(keycode);
+		}
+	}
+
+	void TestMenu::FireKeyPressedEvent(int keycode)
 	{
 		
 		if (currentTest)

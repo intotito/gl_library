@@ -48,15 +48,13 @@ namespace Test {
 	}
 	void Scenery::OnUpdate(float deltaTime)
 	{
+		Test::OnUpdate(deltaTime);
 		scene->OnUpdate(deltaTime);
 	}
-	void Scenery::OnRender(Renderer& renderer)
+	void Scenery::OnRender(Renderer& renderer, float deltaTime)
 	{
-		static float timer = glfwGetTime();
-		float deltaTime = glfwGetTime() - timer;
-		timer = glfwGetTime();
-		scene->LoadDeltaTimeUniform(timer);
-		OnUpdate(deltaTime * 10.0f);
+		scene->LoadDeltaTimeUniform(deltaTime);
+		OnUpdate(deltaTime);
 		renderer.Draw(scene->GetVertexArray(), scene->GetIndexBuffer(), scene->GetShader());
 //		std::cout << "Delta time: " << deltaTime << std::endl;
 	}
@@ -75,27 +73,24 @@ namespace Test {
 		std::cout << "Scenery OnStart Called()" << std::endl;
 	}
 
-	void Scenery::OnKeyPressed(int keycode)
+	void Scenery::OnKeyPressed(event::Event* event)
 	{
+		int keycode = event->GetKeyCode();
 		std::cout << "Okidokiokokokooikokojfisjdifojoasld;j" << std::endl;
 		if (keycode == GLFW_KEY_UP)
 		{
-			Camera* camera = scene->GetCamera();
-			camera->MoveForward();
+			scene->GetCamera()->MoveForward();
 		} else if (keycode == GLFW_KEY_DOWN)
 		{
-			Camera* camera = scene->GetCamera();
-			camera->MoveBackward();
+			scene->GetCamera()->MoveBackward();
 		}
 		else if (keycode == GLFW_KEY_LEFT)
 		{
-			Camera* camera = scene->GetCamera();
-			camera->StrafLeft();
+			scene->GetCamera()->StrafLeft();
 		}
 		else if (keycode == GLFW_KEY_RIGHT)
 		{
-			Camera* camera = scene->GetCamera();
-			camera->StrafRight();
+			scene->GetCamera()->StrafRight();
 		}
 	}
 
